@@ -8,12 +8,22 @@ export interface ArrayViewPayload {
   swapped: number[];
 }
 
+export type HashEntryState = 'NORMAL' | 'PROBED' | 'MATCHED' | 'INSERTED';
+
+export interface HashTableViewPayload {
+  kind: 'HASH_TABLE';
+  capacity: number;
+  buckets: { index: number; entries: { key: number; value: number | null; state: HashEntryState }[] }[];
+  activeBucket: number | null;
+  outcome: 'INSERTED' | 'UPDATED' | 'DUPLICATE' | null;
+}
+
 export interface UnknownViewPayload {
   kind: string;
   [key: string]: unknown;
 }
 
-export type ViewPayload = ArrayViewPayload | UnknownViewPayload;
+export type ViewPayload = ArrayViewPayload | HashTableViewPayload | UnknownViewPayload;
 
 export interface TraceStep {
   index: number;

@@ -1,0 +1,307 @@
+{
+  "demoId" : "hash-map-put",
+  "titleKey" : "demo.hashMapPut.title",
+  "sourceCode" : "public void put(int key, int value) {\n    int index = key % table.length;\n    Node node = table[index];\n    while (node != null) {\n        if (node.key == key) {\n            node.value = value;\n            return;\n        }\n        node = node.next;\n    }\n    table[index] = new Node(key, value, table[index]);\n    size++;\n}",
+  "steps" : [ {
+    "index" : 0,
+    "line" : 2,
+    "messageKey" : "hashMapPut.bucket",
+    "messageArgs" : {
+      "key" : 13,
+      "bucket" : 5,
+      "capacity" : 8
+    },
+    "vars" : {
+      "key" : 13,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "value" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 37,
+          "value" : 37,
+          "state" : "NORMAL"
+        }, {
+          "key" : 21,
+          "value" : 21,
+          "state" : "NORMAL"
+        }, {
+          "key" : 5,
+          "value" : 5,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "kind" : "HASH_TABLE"
+    }
+  }, {
+    "index" : 1,
+    "line" : 5,
+    "messageKey" : "hashMapPut.compare",
+    "messageArgs" : {
+      "key" : 13,
+      "other" : 37
+    },
+    "vars" : {
+      "key" : 13,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "value" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 37,
+          "value" : 37,
+          "state" : "PROBED"
+        }, {
+          "key" : 21,
+          "value" : 21,
+          "state" : "NORMAL"
+        }, {
+          "key" : 5,
+          "value" : 5,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "kind" : "HASH_TABLE"
+    }
+  }, {
+    "index" : 2,
+    "line" : 5,
+    "messageKey" : "hashMapPut.compare",
+    "messageArgs" : {
+      "key" : 13,
+      "other" : 21
+    },
+    "vars" : {
+      "key" : 13,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "value" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 37,
+          "value" : 37,
+          "state" : "NORMAL"
+        }, {
+          "key" : 21,
+          "value" : 21,
+          "state" : "PROBED"
+        }, {
+          "key" : 5,
+          "value" : 5,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "kind" : "HASH_TABLE"
+    }
+  }, {
+    "index" : 3,
+    "line" : 5,
+    "messageKey" : "hashMapPut.compare",
+    "messageArgs" : {
+      "key" : 13,
+      "other" : 5
+    },
+    "vars" : {
+      "key" : 13,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "value" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 37,
+          "value" : 37,
+          "state" : "NORMAL"
+        }, {
+          "key" : 21,
+          "value" : 21,
+          "state" : "NORMAL"
+        }, {
+          "key" : 5,
+          "value" : 5,
+          "state" : "PROBED"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "kind" : "HASH_TABLE"
+    }
+  }, {
+    "index" : 4,
+    "line" : 11,
+    "messageKey" : "hashMapPut.insert",
+    "messageArgs" : {
+      "key" : 13,
+      "bucket" : 5
+    },
+    "vars" : {
+      "key" : 13,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "value" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 13,
+          "value" : 99,
+          "state" : "INSERTED"
+        }, {
+          "key" : 37,
+          "value" : 37,
+          "state" : "NORMAL"
+        }, {
+          "key" : 21,
+          "value" : 21,
+          "state" : "NORMAL"
+        }, {
+          "key" : 5,
+          "value" : 5,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "outcome" : "INSERTED",
+      "kind" : "HASH_TABLE"
+    }
+  } ],
+  "result" : {
+    "returnValue" : "INSERTED",
+    "stepCount" : 5,
+    "measured" : false
+  }
+}
