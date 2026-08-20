@@ -6,8 +6,10 @@ import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
 import { DemoScreen } from './DemoScreen';
 import { I18nProvider } from '../i18n/I18nContext';
+import { LanguageToggle } from '../components/LanguageToggle';
 import { format } from '../i18n/format';
 import en from '../i18n/en.json';
+import pt from '../i18n/pt.json';
 import binarySearchTrace from '../fixtures/binary-search.json';
 
 const demos = [
@@ -65,6 +67,7 @@ afterAll(() => server.close());
 function renderScreen() {
   return render(
     <I18nProvider>
+      <LanguageToggle />
       <MemoryRouter initialEntries={['/demo/binary-search']}>
         <Routes>
           <Route path="/demo/:id" element={<DemoScreen />} />
@@ -75,6 +78,28 @@ function renderScreen() {
 }
 
 describe('DemoScreen', () => {
+  it('retranslates the current step without running the trace again', async () => {
+    let traceRequests = 0;
+    server.use(
+      http.post('/api/demos/binary-search/trace', () => {
+        traceRequests += 1;
+        return HttpResponse.json(binarySearchTrace);
+      }),
+    );
+    localStorage.setItem('lang', 'en');
+    const user = userEvent.setup();
+    renderScreen();
+
+    const step = binarySearchTrace.steps[0];
+    await screen.findByText(format(en[step.messageKey as keyof typeof en], step.messageArgs));
+    await waitFor(() => expect(traceRequests).toBe(1));
+
+    await user.click(screen.getByRole('button', { name: 'Português' }));
+
+    expect(await screen.findByText(format(pt[step.messageKey as keyof typeof pt], step.messageArgs))).toBeInTheDocument();
+    expect(traceRequests).toBe(1);
+  });
+
   it('returns to the first step when a new run has the same number of steps', async () => {
     renderScreen();
     const user = userEvent.setup();
