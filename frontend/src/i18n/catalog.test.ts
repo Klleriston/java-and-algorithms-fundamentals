@@ -4,12 +4,13 @@ import pt from './pt.json';
 import binarySearch from '../fixtures/binary-search.json';
 import bubbleSort from '../fixtures/bubble-sort.json';
 import hashMapPut from '../fixtures/hash-map-put.json';
+import hashSetAdd from '../fixtures/hash-set-add.json';
 import bstInsert from '../fixtures/bst-insert.json';
 import linkedListInsert from '../fixtures/linked-list-insert.json';
 import type { Trace } from '../types';
 
 const catalogs: Record<string, Record<string, string>> = { en, pt };
-const traces = [binarySearch, bubbleSort, hashMapPut, bstInsert, linkedListInsert] as unknown as Trace[];
+const traces = [binarySearch, bubbleSort, hashMapPut, hashSetAdd, bstInsert, linkedListInsert] as unknown as Trace[];
 
 function keysInUse(): { key: string; args: Record<string, unknown> }[] {
   return traces.flatMap((trace) => [

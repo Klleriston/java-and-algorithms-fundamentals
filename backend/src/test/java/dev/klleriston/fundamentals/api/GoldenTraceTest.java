@@ -48,6 +48,11 @@ class GoldenTraceTest {
     }
 
     @Test
+    void hashSetAddTraceMatchesFixture() throws Exception {
+        assertGolden("hash-set-add", Map.of("values", List.of(5, 21, 37, 8), "value", 37));
+    }
+
+    @Test
     void bstInsertTraceMatchesFixture() throws Exception {
         assertGolden("bst-insert", Map.of("values", List.of(50, 30, 70, 20, 40, 60), "value", 35));
     }
