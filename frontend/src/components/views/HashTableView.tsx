@@ -18,7 +18,7 @@ export function HashTableView({ view }: { view: HashTableViewPayload }) {
                 <span className="hash-entry" data-state={entry.state}>
                   {entry.key}
                 </span>
-                {entry.value !== null && <span className="hash-entry-value">: {entry.value}</span>}
+                {entry.value != null && <span className="hash-entry-value">: {entry.value}</span>}
               </span>
             ))}
           </div>

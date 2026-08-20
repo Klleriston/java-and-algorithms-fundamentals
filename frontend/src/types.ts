@@ -13,9 +13,11 @@ export type HashEntryState = 'NORMAL' | 'PROBED' | 'MATCHED' | 'INSERTED';
 export interface HashTableViewPayload {
   kind: 'HASH_TABLE';
   capacity: number;
-  buckets: { index: number; entries: { key: number; value: number | null; state: HashEntryState }[] }[];
-  activeBucket: number | null;
-  outcome: 'INSERTED' | 'UPDATED' | 'DUPLICATE' | null;
+  // The backend serializes with non_null inclusion, so a null value, bucket or
+  // outcome arrives as an absent field rather than as null.
+  buckets: { index: number; entries: { key: number; value?: number | null; state: HashEntryState }[] }[];
+  activeBucket?: number | null;
+  outcome?: 'INSERTED' | 'UPDATED' | 'DUPLICATE' | null;
 }
 
 export interface UnknownViewPayload {

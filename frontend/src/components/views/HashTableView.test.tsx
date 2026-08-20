@@ -25,3 +25,18 @@ describe('HashTableView', () => {
     expect(screen.getByText('13')).toHaveAttribute('data-state', 'INSERTED');
   });
 });
+
+it('prints keys alone when entries carry no value, as a set sends them', () => {
+  const setLike: HashTableViewPayload = {
+    kind: 'HASH_TABLE',
+    capacity: 2,
+    buckets: [
+      { index: 0, entries: [] },
+      { index: 1, entries: [{ key: 7, state: 'NORMAL' }] },
+    ],
+    activeBucket: 1,
+  };
+  render(<HashTableView view={setLike} />);
+  expect(screen.getByTestId('bucket-1').textContent).toBe('17');
+  expect(screen.getByTestId('bucket-1').textContent).not.toContain('undefined');
+});
