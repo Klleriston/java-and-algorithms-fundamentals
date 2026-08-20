@@ -23,6 +23,27 @@ class LinkedListInsertDemoTest {
     }
 
     @Test
+    void showsTheNewNodeBeforeItIsLinkedIn() {
+        Trace trace = run(Map.of("values", List.of(10, 20, 30, 40), "position", 2, "value", 25));
+
+        LinkedListView creating = (LinkedListView) trace.steps().get(2).view();
+        assertThat(creating.newNode()).isNotNull();
+        assertThat(creating.nodes()).extracting(LinkedListView.Node::value)
+                .as("the created node is on screen even though nothing points at it yet")
+                .contains(25);
+        assertThat(creating.nodes())
+                .as("nothing in the chain points at it until the next step")
+                .noneMatch(node -> creating.newNode().equals(node.next()));
+        assertThat(creating.nodes()).filteredOn(node -> node.value() == 25)
+                .allSatisfy(node -> assertThat(node.next())
+                        .as("the created node already points into the chain")
+                        .isNotNull());
+
+        LinkedListView linked = (LinkedListView) trace.steps().get(3).view();
+        assertThat(linked.nodes()).anyMatch(node -> linked.newNode().equals(node.next()));
+    }
+
+    @Test
     void exposesItsIdentity() {
         assertThat(demo.id()).isEqualTo("linked-list-insert");
         assertThat(demo.category()).isEqualTo(Category.DATA_STRUCTURES);

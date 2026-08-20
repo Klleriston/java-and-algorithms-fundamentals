@@ -10,10 +10,12 @@ export interface ArrayViewPayload {
 
 export interface LinkedListViewPayload {
   kind: 'LINKED_LIST';
-  nodes: { id: number; value: number; next: number | null }[];
-  cursor: number | null;
-  changedLinks: { from: number | null; to: number | null }[];
-  newNode: number | null;
+  // The backend serializes with non_null inclusion, so a null next, cursor or
+  // link end arrives as an absent field rather than as null.
+  nodes: { id: number; value: number; next?: number | null }[];
+  cursor?: number | null;
+  changedLinks: { from?: number | null; to?: number | null }[];
+  newNode?: number | null;
 }
 
 export interface UnknownViewPayload {

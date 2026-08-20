@@ -106,6 +106,14 @@ public final class LinkedListInsert {
         for (Node node = head; node != null; node = node.next) {
             nodes.add(new LinkedListView.Node(node.id, node.value, node.next == null ? null : node.next.id));
         }
+        // `new Node(value, previous.next)` already exists and already points into the
+        // chain — it is only unreachable from the head until the next step links it.
+        // Send it anyway, detached, or the step that creates it would show nothing.
+        if (newNode != null && nodes.stream().noneMatch(node -> node.id() == newNode)) {
+            Node created = all.get(newNode);
+            nodes.add(new LinkedListView.Node(created.id, created.value,
+                    created.next == null ? null : created.next.id));
+        }
         return new LinkedListView(nodes, cursor, changedLinks, newNode);
     }
 }

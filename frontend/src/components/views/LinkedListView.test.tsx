@@ -29,3 +29,25 @@ describe('LinkedListView', () => {
     }
   });
 });
+
+it('draws the created node detached, before anything points at it', () => {
+  const view = trace.steps[2].view as LinkedListViewPayload;
+  render(<LinkedListView view={view} />);
+
+  const detached = screen.getByTestId('detached-nodes');
+  expect(detached).toContainElement(screen.getByTestId(`list-node-${view.newNode}`));
+  expect(screen.getByTestId(`list-node-${view.newNode}`)).toHaveAttribute('data-new', 'true');
+});
+
+it('joins the new node into the chain on the step that links it', () => {
+  const view = trace.steps[trace.steps.length - 1].view as LinkedListViewPayload;
+  render(<LinkedListView view={view} />);
+  expect(screen.queryByTestId('detached-nodes')).not.toBeInTheDocument();
+});
+
+it('draws no arrow after the last node', () => {
+  const view = trace.steps[trace.steps.length - 1].view as LinkedListViewPayload;
+  const tail = view.nodes.find((node) => node.next == null);
+  render(<LinkedListView view={view} />);
+  expect(screen.queryByTestId(`link-${tail!.id}`)).not.toBeInTheDocument();
+});

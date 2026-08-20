@@ -49,3 +49,14 @@
   color: #d1a34a;
   font-weight: bold;
 }
+
+.linked-list-board {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.linked-list--detached {
+  opacity: 0.85;
+  padding-left: 24px;
+}
