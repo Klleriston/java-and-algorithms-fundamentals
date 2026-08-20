@@ -8,6 +8,17 @@ export interface ArrayViewPayload {
   swapped: number[];
 }
 
+// The backend serializes with non_null inclusion, so a null child, cursor or
+// outcome arrives as an absent field rather than as null. The optional markers
+// are what the wire actually looks like.
+export interface TreeViewPayload {
+  kind: 'TREE';
+  nodes: { id: number; value: number; left?: number | null; right?: number | null }[];
+  activeNode?: number | null;
+  path: number[];
+  insertedNode?: number | null;
+}
+
 export interface LinkedListViewPayload {
   kind: 'LINKED_LIST';
   // The backend serializes with non_null inclusion, so a null next, cursor or
@@ -23,7 +34,11 @@ export interface UnknownViewPayload {
   [key: string]: unknown;
 }
 
-export type ViewPayload = ArrayViewPayload | LinkedListViewPayload | UnknownViewPayload;
+export type ViewPayload =
+  | ArrayViewPayload
+  | TreeViewPayload
+  | LinkedListViewPayload
+  | UnknownViewPayload;
 
 export interface TraceStep {
   index: number;

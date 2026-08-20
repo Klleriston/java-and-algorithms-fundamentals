@@ -1,12 +1,14 @@
 import type { ComponentType } from 'react';
 import type { ViewPayload } from '../../types';
 import { ArrayView } from './ArrayView';
+import { TreeView } from './TreeView';
 import { FallbackView } from './FallbackView';
 import { LinkedListView } from './LinkedListView';
 
 // Later phases register new kinds here and nowhere else.
 const renderers: Record<string, ComponentType<{ view: any }>> = {
   ARRAY: ArrayView,
+  TREE: TreeView,
   LINKED_LIST: LinkedListView,
 };
 

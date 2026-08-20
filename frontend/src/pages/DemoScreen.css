@@ -70,3 +70,16 @@
     grid-template-columns: 1fr;
   }
 }
+
+.back-link {
+  align-self: flex-start;
+  color: #9aa4b2;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  color: #6fb3ff;
+  text-decoration: underline;
+}

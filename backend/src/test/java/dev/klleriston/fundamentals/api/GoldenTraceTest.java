@@ -43,6 +43,11 @@ class GoldenTraceTest {
     }
 
     @Test
+    void bstInsertTraceMatchesFixture() throws Exception {
+        assertGolden("bst-insert", Map.of("values", List.of(50, 30, 70, 20, 40, 60), "value", 35));
+    }
+
+    @Test
     void linkedListInsertTraceMatchesFixture() throws Exception {
         assertGolden("linked-list-insert", Map.of("values", List.of(10, 20, 30, 40), "position", 2, "value", 25));
     }
