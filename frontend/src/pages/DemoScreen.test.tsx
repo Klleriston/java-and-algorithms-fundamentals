@@ -55,6 +55,20 @@ function renderScreen() {
 }
 
 describe('DemoScreen', () => {
+  it('returns to the first step when a new run has the same number of steps', async () => {
+    renderScreen();
+    const user = userEvent.setup();
+    const total = binarySearchTrace.steps.length;
+
+    await screen.findByText(`step 1 / ${total}`);
+    await user.click(screen.getByLabelText('last step'));
+    await screen.findByText(`step ${total} / ${total}`);
+
+    await user.click(screen.getByRole('button', { name: 'Run' }));
+
+    await waitFor(() => expect(screen.getByText(`step 1 / ${total}`)).toBeInTheDocument());
+  });
+
   it('loads the demo and shows the first step', async () => {
     renderScreen();
 

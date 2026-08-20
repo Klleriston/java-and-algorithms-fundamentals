@@ -49,11 +49,16 @@ export function DemoScreen() {
         const result = await runTrace(id, toParams(specs, nextValues));
         setTrace(result);
         setError(undefined);
+        // A new run always starts at step 1. The player resets itself when the step
+        // count changes, but two different inputs can produce traces of the same
+        // length, and then it would keep whatever index it was sitting on.
+        player.pause();
+        player.first();
       } catch (caught) {
         setError(caught instanceof ApiRequestError ? caught.message : 'Request failed');
       }
     },
-    [id],
+    [id, player.first, player.pause],
   );
 
   useEffect(() => {
