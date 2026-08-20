@@ -1,0 +1,120 @@
+{
+  "demoId" : "hash-set-add",
+  "titleKey" : "demo.hashSetAdd.title",
+  "sourceCode" : "public boolean add(int value) {\n    int index = value % table.length;\n    Node node = table[index];\n    while (node != null) {\n        if (node.value == value) {\n            return false;\n        }\n        node = node.next;\n    }\n    table[index] = new Node(value, table[index]);\n    size++;\n    return true;\n}",
+  "steps" : [ {
+    "index" : 0,
+    "line" : 2,
+    "messageKey" : "hashSetAdd.bucket",
+    "messageArgs" : {
+      "value" : 37,
+      "bucket" : 5,
+      "capacity" : 8
+    },
+    "vars" : {
+      "value" : 37,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 37,
+          "state" : "NORMAL"
+        }, {
+          "key" : 21,
+          "state" : "NORMAL"
+        }, {
+          "key" : 5,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "kind" : "HASH_TABLE"
+    }
+  }, {
+    "index" : 1,
+    "line" : 6,
+    "messageKey" : "hashSetAdd.duplicate",
+    "messageArgs" : {
+      "value" : 37
+    },
+    "vars" : {
+      "value" : 37,
+      "index" : 5
+    },
+    "view" : {
+      "capacity" : 8,
+      "buckets" : [ {
+        "index" : 0,
+        "entries" : [ {
+          "key" : 8,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 1,
+        "entries" : [ ]
+      }, {
+        "index" : 2,
+        "entries" : [ ]
+      }, {
+        "index" : 3,
+        "entries" : [ ]
+      }, {
+        "index" : 4,
+        "entries" : [ ]
+      }, {
+        "index" : 5,
+        "entries" : [ {
+          "key" : 37,
+          "state" : "MATCHED"
+        }, {
+          "key" : 21,
+          "state" : "NORMAL"
+        }, {
+          "key" : 5,
+          "state" : "NORMAL"
+        } ]
+      }, {
+        "index" : 6,
+        "entries" : [ ]
+      }, {
+        "index" : 7,
+        "entries" : [ ]
+      } ],
+      "activeBucket" : 5,
+      "outcome" : "DUPLICATE",
+      "kind" : "HASH_TABLE"
+    }
+  } ],
+  "result" : {
+    "returnValue" : false,
+    "stepCount" : 2,
+    "measured" : false
+  }
+}

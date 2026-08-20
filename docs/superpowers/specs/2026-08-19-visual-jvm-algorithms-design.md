@@ -138,6 +138,26 @@ code panel and the variable table, for any demo of any kind.
 (the GC demo) and `false` otherwise. The UI shows a "measured on a real JVM"
 badge only when it is `true`.
 
+### 4.1 Highlighted line convention
+
+Every step carries a `line` pointing into `sourceCode`. The rule, applied by all
+demos: **highlight the line that narrates the step, so the highlighted line and
+the state on screen describe the same moment.**
+
+- A step that reports a decision highlights the branch line just evaluated. In
+  binary search that is `if (a[mid] == target)`, `} else if (a[mid] < target)`,
+  or `} else {` — never the assignment inside the branch, because the pointers
+  shown are still the pre-assignment ones.
+- A step that reports a mutation highlights the last line of that mutation, so
+  the highlighted line matches the array already shown changed. In bubble sort a
+  swap highlights `a[j + 1] = tmp;`, not the first line of the three-line swap.
+- A closing step highlights where control leaves the method: `return -1;` for an
+  absent key, the method's closing brace when a sort finishes.
+
+Locked by `highlightsTheLineThatNarratesEachDecision` and
+`highlightsTheLineThatNarratesEachStep`; changing a line number fails those
+tests and requires regenerating the golden fixtures.
+
 ### 4.1 View kinds
 
 The frontend maps `view.kind` to a renderer component. An unknown kind falls
@@ -307,6 +327,11 @@ GitHub Actions on push and pull request: `mvn -B verify` and `npm ci && npm test
 from the default local run.
 
 ## 10. Delivery phases
+
+> **Superseded for phases 2 onward** by
+> `2026-08-20-phase-2-data-structures-i18n-design.md`. Phase 2 is now four data
+> structure demos plus Portuguese and English narration; OOP moves to phase 3
+> and the JVM memory model and GC to phase 4. Phase 1 below shipped as written.
 
 One architecture, delivered in four phases. Each phase ends with a working,
 deployable app.

@@ -1,0 +1,72 @@
+.hash-table {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 24px 12px;
+}
+
+.hash-bucket {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 10px;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  background: #202020;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.hash-bucket[data-active='true'] {
+  border-color: #4aa3ff;
+  background: #1b2a3a;
+}
+
+.hash-bucket-index {
+  flex: 0 0 24px;
+  color: #6b6b6b;
+  font-size: 11px;
+  text-align: right;
+}
+
+.hash-chain {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  min-height: 32px;
+}
+
+.hash-entry-wrapper {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  min-width: 44px;
+  padding: 6px 8px;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  background: #252526;
+  color: #e6e6e6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.hash-entry-value {
+  color: #9d9d9d;
+}
+
+.hash-entry-wrapper[data-state='PROBED'] {
+  border-color: #d1a34a;
+  background: #4a3a1f;
+}
+
+.hash-entry-wrapper[data-state='MATCHED'] {
+  border-color: #c46bd6;
+  background: #3a2140;
+}
+
+.hash-entry-wrapper[data-state='INSERTED'] {
+  border-color: #3f8f5f;
+  background: #22352a;
+}

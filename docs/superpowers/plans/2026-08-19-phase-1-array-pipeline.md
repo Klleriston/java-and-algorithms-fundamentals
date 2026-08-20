@@ -177,6 +177,8 @@ git commit -m "feat: add Spring Boot backend skeleton"
   - `record TraceResult(Object returnValue, int stepCount, boolean measured)`
   - `record Trace(String demoId, String title, String sourceCode, List<TraceStep> steps, TraceResult result)`
 
+The maps are copied into a `LinkedHashMap`, not with `Map.copyOf`: `Map.copyOf` returns an immutable map whose iteration order is randomized per JVM run, which would make the serialized JSON — and therefore the golden fixtures in Task 9 — differ between runs. Insertion order is also the order the learner reads the variables in.
+
 Note for the implementer: `ViewPayload` is `sealed` and later phases add permitted types. When Phase 2 adds `TreeView`, it is added to the `permits` clause — that is the one intentional edit to this file per phase.
 
 - [ ] **Step 1: Write the failing test**
@@ -255,6 +257,8 @@ public sealed interface ViewPayload permits ArrayView {
 ```java
 package dev.klleriston.fundamentals.trace;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -266,7 +270,7 @@ public record ArrayView(
 
     public ArrayView {
         items = List.copyOf(items);
-        pointers = Map.copyOf(pointers);
+        pointers = Collections.unmodifiableMap(new LinkedHashMap<>(pointers));
         ranges = List.copyOf(ranges);
         swapped = List.copyOf(swapped);
     }
@@ -290,12 +294,14 @@ public record ArrayView(
 ```java
 package dev.klleriston.fundamentals.trace;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record TraceStep(int index, int line, String message, Map<String, Object> vars, ViewPayload view) {
 
     public TraceStep {
-        vars = Map.copyOf(vars);
+        vars = Collections.unmodifiableMap(new LinkedHashMap<>(vars));
     }
 }
 ```
@@ -1178,7 +1184,7 @@ public final class BinarySearch {
                         vars(low, high, mid), view(a, low, high, mid));
                 low = mid + 1;
             } else {
-                tracer.step(11, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
+                tracer.step(10, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
                         vars(low, high, mid), view(a, low, high, mid));
                 high = mid - 1;
             }
@@ -1478,7 +1484,7 @@ public final class BubbleSort {
                     int tmp = a[j];
                     a[j] = a[j + 1];
                     a[j + 1] = tmp;
-                    tracer.step(6, "a[" + j + "] > a[" + (j + 1) + "], swap them",
+                    tracer.step(7, "a[" + j + "] > a[" + (j + 1) + "], swap them",
                             vars(i, j), view(a, i, j, List.of(j, j + 1)));
                 } else {
                     tracer.step(4, "a[" + j + "] <= a[" + (j + 1) + "], keep the order",
@@ -1612,6 +1618,7 @@ git commit -m "feat: add bubble sort demo"
 - Create: `backend/src/main/java/dev/klleriston/fundamentals/api/ApiError.java`
 - Create: `backend/src/main/java/dev/klleriston/fundamentals/api/DemoController.java`
 - Create: `backend/src/main/java/dev/klleriston/fundamentals/api/ApiExceptionHandler.java`
+- Create: `backend/src/main/java/dev/klleriston/fundamentals/api/JacksonConfig.java`
 - Test: `backend/src/test/java/dev/klleriston/fundamentals/api/DemoControllerTest.java`
 
 **Interfaces:**
@@ -1621,7 +1628,7 @@ git commit -m "feat: add bubble sort demo"
   - `POST /api/demos/{id}/trace` with a JSON object body of parameters → `Trace`.
   - `record ApiError(String error, String message, String field)`.
 
-Jackson serializes `ViewPayload` implementations by their record components; `kind()` is a no-arg getter on the interface, so it appears in JSON as `"kind"` automatically. The controller test asserts this, because the frontend's renderer lookup depends on it.
+Jackson serializes `ViewPayload` implementations by their record components, but it does **not** pick up `kind()`: auto-detection only covers `getX()`/`isX()` accessors. Since the `trace` package carries no Jackson annotations by design, the mapping lives in the `api` layer as a mix-in registered through a `Module` bean (`JacksonConfig`). The controller test asserts `view.kind` is present, because the frontend's renderer lookup depends on it.
 
 - [ ] **Step 1: Write the failing test**
 
@@ -4003,7 +4010,7 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches: [main, dev]
   pull_request:
 
 jobs:

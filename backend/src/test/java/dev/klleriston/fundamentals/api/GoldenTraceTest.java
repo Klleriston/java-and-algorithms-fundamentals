@@ -1,0 +1,99 @@
+package dev.klleriston.fundamentals.api;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import dev.klleriston.fundamentals.core.Demo;
+import dev.klleriston.fundamentals.core.DemoParams;
+import dev.klleriston.fundamentals.core.DemoRegistry;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+class GoldenTraceTest {
+
+    private static final Path FIXTURES = Path.of("..", "frontend", "src", "fixtures");
+
+    @Autowired
+    private DemoRegistry registry;
+
+    /** Spring's mapper, so the fixture matches what the API actually returns (including non-null inclusion). */
+    @Autowired
+    private ObjectMapper springMapper;
+
+    private ObjectMapper mapper() {
+        return springMapper.copy().enable(SerializationFeature.INDENT_OUTPUT);
+    }
+
+    @Test
+    void binarySearchTraceMatchesFixture() throws Exception {
+        assertGolden("binary-search", Map.of("array", List.of(2, 5, 8, 12, 20, 33), "target", 20));
+    }
+
+    @Test
+    void bubbleSortTraceMatchesFixture() throws Exception {
+        assertGolden("bubble-sort", Map.of("array", List.of(5, 2, 9, 1, 7)));
+    }
+
+    @Test
+    void hashMapPutTraceMatchesFixture() throws Exception {
+        assertGolden("hash-map-put", Map.of("keys", List.of(5, 21, 37, 8), "key", 13, "value", 99));
+    }
+
+    @Test
+    void hashSetAddTraceMatchesFixture() throws Exception {
+        assertGolden("hash-set-add", Map.of("values", List.of(5, 21, 37, 8), "value", 37));
+    }
+
+    @Test
+    void bstInsertTraceMatchesFixture() throws Exception {
+        assertGolden("bst-insert", Map.of("values", List.of(50, 30, 70, 20, 40, 60), "value", 35));
+    }
+
+    @Test
+    void linkedListInsertTraceMatchesFixture() throws Exception {
+        assertGolden("linked-list-insert", Map.of("values", List.of(10, 20, 30, 40), "position", 2, "value", 25));
+    }
+
+    /**
+     * The catalog the API returns, frozen as a fixture. The frontend tests read it, and the
+     * static build published to GitHub Pages serves it in place of a live backend.
+     */
+    @Test
+    void catalogMatchesFixture() throws Exception {
+        List<DemoSummary> catalog = registry.all().stream().map(DemoSummary::from).toList();
+        String actual = mapper().writeValueAsString(catalog);
+
+        Path fixture = FIXTURES.resolve("demos.json");
+        if (Boolean.getBoolean("golden.update") || !Files.exists(fixture)) {
+            Files.createDirectories(FIXTURES);
+            Files.writeString(fixture, actual + System.lineSeparator());
+        }
+
+        assertThat(Files.readString(fixture).trim())
+                .as("Fixture %s is stale. Regenerate with -Dgolden.update=true", fixture)
+                .isEqualTo(actual.trim());
+    }
+
+    private void assertGolden(String demoId, Map<String, Object> params) throws Exception {
+        Demo demo = registry.require(demoId);
+        String actual = mapper().writeValueAsString(demo.run(DemoParams.of(params, demo.parameters())));
+
+        Path fixture = FIXTURES.resolve(demoId + ".json");
+        if (Boolean.getBoolean("golden.update") || !Files.exists(fixture)) {
+            Files.createDirectories(FIXTURES);
+            Files.writeString(fixture, actual + System.lineSeparator());
+        }
+
+        assertThat(Files.readString(fixture).trim())
+                .as("Fixture %s is stale. Regenerate with -Dgolden.update=true", fixture)
+                .isEqualTo(actual.trim());
+    }
+}

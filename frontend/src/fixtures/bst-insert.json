@@ -1,0 +1,180 @@
+{
+  "demoId" : "bst-insert",
+  "titleKey" : "demo.bstInsert.title",
+  "sourceCode" : "public Node insert(Node node, int value) {\n    if (node == null) {\n        return new Node(value);\n    }\n    if (value < node.value) {\n        node.left = insert(node.left, value);\n    } else if (value > node.value) {\n        node.right = insert(node.right, value);\n    }\n    return node;\n}",
+  "steps" : [ {
+    "index" : 0,
+    "line" : 5,
+    "messageKey" : "bstInsert.compareLess",
+    "messageArgs" : {
+      "value" : 35,
+      "node" : 50
+    },
+    "vars" : {
+      "value" : 35,
+      "node" : 50
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 50,
+        "left" : 1,
+        "right" : 2
+      }, {
+        "id" : 1,
+        "value" : 30,
+        "left" : 3,
+        "right" : 4
+      }, {
+        "id" : 2,
+        "value" : 70,
+        "left" : 5
+      }, {
+        "id" : 3,
+        "value" : 20
+      }, {
+        "id" : 4,
+        "value" : 40
+      }, {
+        "id" : 5,
+        "value" : 60
+      } ],
+      "activeNode" : 0,
+      "path" : [ 0 ],
+      "kind" : "TREE"
+    }
+  }, {
+    "index" : 1,
+    "line" : 7,
+    "messageKey" : "bstInsert.compareGreater",
+    "messageArgs" : {
+      "value" : 35,
+      "node" : 30
+    },
+    "vars" : {
+      "value" : 35,
+      "node" : 30
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 50,
+        "left" : 1,
+        "right" : 2
+      }, {
+        "id" : 1,
+        "value" : 30,
+        "left" : 3,
+        "right" : 4
+      }, {
+        "id" : 2,
+        "value" : 70,
+        "left" : 5
+      }, {
+        "id" : 3,
+        "value" : 20
+      }, {
+        "id" : 4,
+        "value" : 40
+      }, {
+        "id" : 5,
+        "value" : 60
+      } ],
+      "activeNode" : 1,
+      "path" : [ 0, 1 ],
+      "kind" : "TREE"
+    }
+  }, {
+    "index" : 2,
+    "line" : 5,
+    "messageKey" : "bstInsert.compareLess",
+    "messageArgs" : {
+      "value" : 35,
+      "node" : 40
+    },
+    "vars" : {
+      "value" : 35,
+      "node" : 40
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 50,
+        "left" : 1,
+        "right" : 2
+      }, {
+        "id" : 1,
+        "value" : 30,
+        "left" : 3,
+        "right" : 4
+      }, {
+        "id" : 2,
+        "value" : 70,
+        "left" : 5
+      }, {
+        "id" : 3,
+        "value" : 20
+      }, {
+        "id" : 4,
+        "value" : 40
+      }, {
+        "id" : 5,
+        "value" : 60
+      } ],
+      "activeNode" : 4,
+      "path" : [ 0, 1, 4 ],
+      "kind" : "TREE"
+    }
+  }, {
+    "index" : 3,
+    "line" : 3,
+    "messageKey" : "bstInsert.attachLeft",
+    "messageArgs" : {
+      "value" : 35,
+      "parent" : 40
+    },
+    "vars" : {
+      "value" : 35,
+      "node" : 40
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 50,
+        "left" : 1,
+        "right" : 2
+      }, {
+        "id" : 1,
+        "value" : 30,
+        "left" : 3,
+        "right" : 4
+      }, {
+        "id" : 2,
+        "value" : 70,
+        "left" : 5
+      }, {
+        "id" : 3,
+        "value" : 20
+      }, {
+        "id" : 4,
+        "value" : 40,
+        "left" : 6
+      }, {
+        "id" : 5,
+        "value" : 60
+      }, {
+        "id" : 6,
+        "value" : 35
+      } ],
+      "activeNode" : 6,
+      "path" : [ 0, 1, 4 ],
+      "insertedNode" : 6,
+      "kind" : "TREE"
+    }
+  } ],
+  "result" : {
+    "returnValue" : true,
+    "stepCount" : 4,
+    "measured" : false
+  }
+}

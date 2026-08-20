@@ -1,0 +1,298 @@
+{
+  "demoId" : "bubble-sort",
+  "titleKey" : "demo.bubbleSort.title",
+  "sourceCode" : "public static void sort(int[] a) {\n    for (int i = 0; i < a.length - 1; i++) {\n        for (int j = 0; j < a.length - 1 - i; j++) {\n            if (a[j] > a[j + 1]) {\n                int tmp = a[j];\n                a[j] = a[j + 1];\n                a[j + 1] = tmp;\n            }\n        }\n    }\n}",
+  "steps" : [ {
+    "index" : 0,
+    "line" : 7,
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 5,
+      "rightValue" : 2
+    },
+    "vars" : {
+      "i" : 0,
+      "j" : 0
+    },
+    "view" : {
+      "items" : [ 2, 5, 9, 1, 7 ],
+      "pointers" : {
+        "j" : 0,
+        "j+1" : 1
+      },
+      "ranges" : [ ],
+      "swapped" : [ 0, 1 ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 1,
+    "line" : 4,
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 1,
+      "right" : 2,
+      "leftValue" : 5,
+      "rightValue" : 9
+    },
+    "vars" : {
+      "i" : 0,
+      "j" : 1
+    },
+    "view" : {
+      "items" : [ 2, 5, 9, 1, 7 ],
+      "pointers" : {
+        "j" : 1,
+        "j+1" : 2
+      },
+      "ranges" : [ ],
+      "swapped" : [ ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 2,
+    "line" : 7,
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 2,
+      "right" : 3,
+      "leftValue" : 9,
+      "rightValue" : 1
+    },
+    "vars" : {
+      "i" : 0,
+      "j" : 2
+    },
+    "view" : {
+      "items" : [ 2, 5, 1, 9, 7 ],
+      "pointers" : {
+        "j" : 2,
+        "j+1" : 3
+      },
+      "ranges" : [ ],
+      "swapped" : [ 2, 3 ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 3,
+    "line" : 7,
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 3,
+      "right" : 4,
+      "leftValue" : 9,
+      "rightValue" : 7
+    },
+    "vars" : {
+      "i" : 0,
+      "j" : 3
+    },
+    "view" : {
+      "items" : [ 2, 5, 1, 7, 9 ],
+      "pointers" : {
+        "j" : 3,
+        "j+1" : 4
+      },
+      "ranges" : [ ],
+      "swapped" : [ 3, 4 ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 4,
+    "line" : 4,
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 2,
+      "rightValue" : 5
+    },
+    "vars" : {
+      "i" : 1,
+      "j" : 0
+    },
+    "view" : {
+      "items" : [ 2, 5, 1, 7, 9 ],
+      "pointers" : {
+        "j" : 0,
+        "j+1" : 1
+      },
+      "ranges" : [ {
+        "from" : 4,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 5,
+    "line" : 7,
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 1,
+      "right" : 2,
+      "leftValue" : 5,
+      "rightValue" : 1
+    },
+    "vars" : {
+      "i" : 1,
+      "j" : 1
+    },
+    "view" : {
+      "items" : [ 2, 1, 5, 7, 9 ],
+      "pointers" : {
+        "j" : 1,
+        "j+1" : 2
+      },
+      "ranges" : [ {
+        "from" : 4,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ 1, 2 ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 6,
+    "line" : 4,
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 2,
+      "right" : 3,
+      "leftValue" : 5,
+      "rightValue" : 7
+    },
+    "vars" : {
+      "i" : 1,
+      "j" : 2
+    },
+    "view" : {
+      "items" : [ 2, 1, 5, 7, 9 ],
+      "pointers" : {
+        "j" : 2,
+        "j+1" : 3
+      },
+      "ranges" : [ {
+        "from" : 4,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 7,
+    "line" : 7,
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 2,
+      "rightValue" : 1
+    },
+    "vars" : {
+      "i" : 2,
+      "j" : 0
+    },
+    "view" : {
+      "items" : [ 1, 2, 5, 7, 9 ],
+      "pointers" : {
+        "j" : 0,
+        "j+1" : 1
+      },
+      "ranges" : [ {
+        "from" : 3,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ 0, 1 ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 8,
+    "line" : 4,
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 1,
+      "right" : 2,
+      "leftValue" : 2,
+      "rightValue" : 5
+    },
+    "vars" : {
+      "i" : 2,
+      "j" : 1
+    },
+    "view" : {
+      "items" : [ 1, 2, 5, 7, 9 ],
+      "pointers" : {
+        "j" : 1,
+        "j+1" : 2
+      },
+      "ranges" : [ {
+        "from" : 3,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 9,
+    "line" : 4,
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 1,
+      "rightValue" : 2
+    },
+    "vars" : {
+      "i" : 3,
+      "j" : 0
+    },
+    "view" : {
+      "items" : [ 1, 2, 5, 7, 9 ],
+      "pointers" : {
+        "j" : 0,
+        "j+1" : 1
+      },
+      "ranges" : [ {
+        "from" : 2,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ ],
+      "kind" : "ARRAY"
+    }
+  }, {
+    "index" : 10,
+    "line" : 11,
+    "messageKey" : "bubbleSort.sorted",
+    "messageArgs" : { },
+    "vars" : {
+      "i" : 4,
+      "j" : 0
+    },
+    "view" : {
+      "items" : [ 1, 2, 5, 7, 9 ],
+      "pointers" : {
+        "j" : 0,
+        "j+1" : 1
+      },
+      "ranges" : [ {
+        "from" : 0,
+        "to" : 4,
+        "state" : "SORTED"
+      } ],
+      "swapped" : [ ],
+      "kind" : "ARRAY"
+    }
+  } ],
+  "result" : {
+    "returnValue" : [ 1, 2, 5, 7, 9 ],
+    "stepCount" : 11,
+    "measured" : false
+  }
+}
