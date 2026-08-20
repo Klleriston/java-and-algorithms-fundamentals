@@ -177,6 +177,8 @@ git commit -m "feat: add Spring Boot backend skeleton"
   - `record TraceResult(Object returnValue, int stepCount, boolean measured)`
   - `record Trace(String demoId, String title, String sourceCode, List<TraceStep> steps, TraceResult result)`
 
+The maps are copied into a `LinkedHashMap`, not with `Map.copyOf`: `Map.copyOf` returns an immutable map whose iteration order is randomized per JVM run, which would make the serialized JSON — and therefore the golden fixtures in Task 9 — differ between runs. Insertion order is also the order the learner reads the variables in.
+
 Note for the implementer: `ViewPayload` is `sealed` and later phases add permitted types. When Phase 2 adds `TreeView`, it is added to the `permits` clause — that is the one intentional edit to this file per phase.
 
 - [ ] **Step 1: Write the failing test**
@@ -255,6 +257,8 @@ public sealed interface ViewPayload permits ArrayView {
 ```java
 package dev.klleriston.fundamentals.trace;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -266,7 +270,7 @@ public record ArrayView(
 
     public ArrayView {
         items = List.copyOf(items);
-        pointers = Map.copyOf(pointers);
+        pointers = Collections.unmodifiableMap(new LinkedHashMap<>(pointers));
         ranges = List.copyOf(ranges);
         swapped = List.copyOf(swapped);
     }
@@ -290,12 +294,14 @@ public record ArrayView(
 ```java
 package dev.klleriston.fundamentals.trace;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public record TraceStep(int index, int line, String message, Map<String, Object> vars, ViewPayload view) {
 
     public TraceStep {
-        vars = Map.copyOf(vars);
+        vars = Collections.unmodifiableMap(new LinkedHashMap<>(vars));
     }
 }
 ```
