@@ -1,0 +1,90 @@
+.player-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid #2c2c2c;
+  background: #1b1b1b;
+  color: #d4d4d4;
+}
+
+.player-controls button {
+  min-width: 36px;
+  padding: 6px 8px;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  background: #262626;
+  color: #e6e6e6;
+  cursor: pointer;
+}
+
+.player-controls input[type='range'] {
+  flex: 1;
+}
+
+.player-controls__counter {
+  min-width: 110px;
+  font-variant-numeric: tabular-nums;
+}
+
+.variable-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #d4d4d4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+}
+
+.variable-table th,
+.variable-table td {
+  padding: 4px 10px;
+  border-bottom: 1px solid #2c2c2c;
+  text-align: left;
+}
+
+.variable-table__empty {
+  padding: 8px 10px;
+  color: #8a8a8a;
+}
+
+.parameter-form {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #2c2c2c;
+  background: #1b1b1b;
+  color: #d4d4d4;
+}
+
+.parameter-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+}
+
+.parameter-form__field input,
+.parameter-form__field select {
+  padding: 6px 8px;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  background: #262626;
+  color: #e6e6e6;
+}
+
+.parameter-form button[type='submit'] {
+  padding: 7px 16px;
+  border: none;
+  border-radius: 6px;
+  background: #2f6feb;
+  color: #fff;
+  cursor: pointer;
+}
+
+.parameter-form__error {
+  flex-basis: 100%;
+  margin: 0;
+  color: #ff7b72;
+}
