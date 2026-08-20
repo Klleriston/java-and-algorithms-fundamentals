@@ -3,10 +3,11 @@ import en from './en.json';
 import pt from './pt.json';
 import binarySearch from '../fixtures/binary-search.json';
 import bubbleSort from '../fixtures/bubble-sort.json';
+import linkedListInsert from '../fixtures/linked-list-insert.json';
 import type { Trace } from '../types';
 
 const catalogs: Record<string, Record<string, string>> = { en, pt };
-const traces = [binarySearch, bubbleSort] as unknown as Trace[];
+const traces = [binarySearch, bubbleSort, linkedListInsert] as unknown as Trace[];
 
 function keysInUse(): { key: string; args: Record<string, unknown> }[] {
   return traces.flatMap((trace) => [

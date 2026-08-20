@@ -42,6 +42,11 @@ class GoldenTraceTest {
         assertGolden("bubble-sort", Map.of("array", List.of(5, 2, 9, 1, 7)));
     }
 
+    @Test
+    void linkedListInsertTraceMatchesFixture() throws Exception {
+        assertGolden("linked-list-insert", Map.of("values", List.of(10, 20, 30, 40), "position", 2, "value", 25));
+    }
+
     private void assertGolden(String demoId, Map<String, Object> params) throws Exception {
         Demo demo = registry.require(demoId);
         String actual = mapper().writeValueAsString(demo.run(DemoParams.of(params, demo.parameters())));

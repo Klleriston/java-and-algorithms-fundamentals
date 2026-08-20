@@ -1,0 +1,154 @@
+{
+  "demoId" : "linked-list-insert",
+  "titleKey" : "demo.linkedListInsert.title",
+  "sourceCode" : "public void insert(int position, int value) {\n    if (position == 0) {\n        head = new Node(value, head);\n        return;\n    }\n    Node previous = head;\n    for (int i = 0; i < position - 1; i++) {\n        previous = previous.next;\n    }\n    Node node = new Node(value, previous.next);\n    previous.next = node;\n    size++;\n}",
+  "steps" : [ {
+    "index" : 0,
+    "line" : 8,
+    "messageKey" : "linkedListInsert.walk",
+    "messageArgs" : {
+      "index" : 1,
+      "value" : 20
+    },
+    "vars" : {
+      "position" : 2,
+      "value" : 25
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 10,
+        "next" : 1
+      }, {
+        "id" : 1,
+        "value" : 20,
+        "next" : 2
+      }, {
+        "id" : 2,
+        "value" : 30,
+        "next" : 3
+      }, {
+        "id" : 3,
+        "value" : 40
+      } ],
+      "cursor" : 1,
+      "changedLinks" : [ ],
+      "kind" : "LINKED_LIST"
+    }
+  }, {
+    "index" : 1,
+    "line" : 7,
+    "messageKey" : "linkedListInsert.arrive",
+    "messageArgs" : {
+      "position" : 2
+    },
+    "vars" : {
+      "position" : 2,
+      "value" : 25
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 10,
+        "next" : 1
+      }, {
+        "id" : 1,
+        "value" : 20,
+        "next" : 2
+      }, {
+        "id" : 2,
+        "value" : 30,
+        "next" : 3
+      }, {
+        "id" : 3,
+        "value" : 40
+      } ],
+      "cursor" : 1,
+      "changedLinks" : [ ],
+      "kind" : "LINKED_LIST"
+    }
+  }, {
+    "index" : 2,
+    "line" : 10,
+    "messageKey" : "linkedListInsert.linkNew",
+    "messageArgs" : {
+      "value" : 25,
+      "next" : 30
+    },
+    "vars" : {
+      "position" : 2,
+      "value" : 25
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 10,
+        "next" : 1
+      }, {
+        "id" : 1,
+        "value" : 20,
+        "next" : 2
+      }, {
+        "id" : 2,
+        "value" : 30,
+        "next" : 3
+      }, {
+        "id" : 3,
+        "value" : 40
+      } ],
+      "cursor" : 4,
+      "changedLinks" : [ {
+        "from" : 4,
+        "to" : 2
+      } ],
+      "newNode" : 4,
+      "kind" : "LINKED_LIST"
+    }
+  }, {
+    "index" : 3,
+    "line" : 11,
+    "messageKey" : "linkedListInsert.relinkPrev",
+    "messageArgs" : {
+      "prev" : 20,
+      "value" : 25
+    },
+    "vars" : {
+      "position" : 2,
+      "value" : 25
+    },
+    "view" : {
+      "nodes" : [ {
+        "id" : 0,
+        "value" : 10,
+        "next" : 1
+      }, {
+        "id" : 1,
+        "value" : 20,
+        "next" : 4
+      }, {
+        "id" : 4,
+        "value" : 25,
+        "next" : 2
+      }, {
+        "id" : 2,
+        "value" : 30,
+        "next" : 3
+      }, {
+        "id" : 3,
+        "value" : 40
+      } ],
+      "cursor" : 4,
+      "changedLinks" : [ {
+        "from" : 1,
+        "to" : 4
+      } ],
+      "newNode" : 4,
+      "kind" : "LINKED_LIST"
+    }
+  } ],
+  "result" : {
+    "returnValue" : [ 10, 20, 25, 30, 40 ],
+    "stepCount" : 4,
+    "measured" : false
+  }
+}

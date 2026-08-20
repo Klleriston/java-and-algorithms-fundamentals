@@ -8,12 +8,20 @@ export interface ArrayViewPayload {
   swapped: number[];
 }
 
+export interface LinkedListViewPayload {
+  kind: 'LINKED_LIST';
+  nodes: { id: number; value: number; next: number | null }[];
+  cursor: number | null;
+  changedLinks: { from: number | null; to: number | null }[];
+  newNode: number | null;
+}
+
 export interface UnknownViewPayload {
   kind: string;
   [key: string]: unknown;
 }
 
-export type ViewPayload = ArrayViewPayload | UnknownViewPayload;
+export type ViewPayload = ArrayViewPayload | LinkedListViewPayload | UnknownViewPayload;
 
 export interface TraceStep {
   index: number;
