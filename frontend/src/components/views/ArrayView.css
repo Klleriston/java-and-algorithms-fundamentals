@@ -1,0 +1,62 @@
+.array-view {
+  display: flex;
+  justify-content: center;
+  padding: 24px 12px;
+  overflow-x: auto;
+}
+
+.array-view__cells {
+  display: flex;
+  gap: 6px;
+}
+
+.array-view__column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.array-view__cell {
+  min-width: 44px;
+  padding: 10px 8px;
+  border: 1px solid #3c3c3c;
+  border-radius: 6px;
+  background: #252526;
+  color: #e6e6e6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  text-align: center;
+  transition: background 120ms ease;
+}
+
+.array-view__cell[data-state='DISCARDED'] {
+  opacity: 0.35;
+}
+
+.array-view__cell[data-state='SORTED'] {
+  border-color: #3f8f5f;
+  background: #22352a;
+}
+
+.array-view__cell[data-state='ACTIVE'] {
+  border-color: #4aa3ff;
+}
+
+.array-view__cell[data-swapped='true'] {
+  background: #4a3a1f;
+  border-color: #d1a34a;
+}
+
+.array-view__pointer {
+  display: inline-block;
+  margin: 0 2px;
+  color: #4aa3ff;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.array-view__index {
+  color: #6b6b6b;
+  font-size: 11px;
+}
