@@ -7,12 +7,12 @@
     "line" : 2,
     "messageKey" : "hashSetAdd.bucket",
     "messageArgs" : {
-      "value" : 13,
+      "value" : 37,
       "bucket" : 5,
       "capacity" : 8
     },
     "vars" : {
-      "value" : 13,
+      "value" : 37,
       "index" : 5
     },
     "view" : {
@@ -59,14 +59,13 @@
     }
   }, {
     "index" : 1,
-    "line" : 5,
-    "messageKey" : "hashSetAdd.compare",
+    "line" : 6,
+    "messageKey" : "hashSetAdd.duplicate",
     "messageArgs" : {
-      "value" : 13,
-      "other" : 37
+      "value" : 37
     },
     "vars" : {
-      "value" : 13,
+      "value" : 37,
       "index" : 5
     },
     "view" : {
@@ -93,7 +92,7 @@
         "index" : 5,
         "entries" : [ {
           "key" : 37,
-          "state" : "PROBED"
+          "state" : "MATCHED"
         }, {
           "key" : 21,
           "state" : "NORMAL"
@@ -109,178 +108,13 @@
         "entries" : [ ]
       } ],
       "activeBucket" : 5,
-      "kind" : "HASH_TABLE"
-    }
-  }, {
-    "index" : 2,
-    "line" : 5,
-    "messageKey" : "hashSetAdd.compare",
-    "messageArgs" : {
-      "value" : 13,
-      "other" : 21
-    },
-    "vars" : {
-      "value" : 13,
-      "index" : 5
-    },
-    "view" : {
-      "capacity" : 8,
-      "buckets" : [ {
-        "index" : 0,
-        "entries" : [ {
-          "key" : 8,
-          "state" : "NORMAL"
-        } ]
-      }, {
-        "index" : 1,
-        "entries" : [ ]
-      }, {
-        "index" : 2,
-        "entries" : [ ]
-      }, {
-        "index" : 3,
-        "entries" : [ ]
-      }, {
-        "index" : 4,
-        "entries" : [ ]
-      }, {
-        "index" : 5,
-        "entries" : [ {
-          "key" : 37,
-          "state" : "NORMAL"
-        }, {
-          "key" : 21,
-          "state" : "PROBED"
-        }, {
-          "key" : 5,
-          "state" : "NORMAL"
-        } ]
-      }, {
-        "index" : 6,
-        "entries" : [ ]
-      }, {
-        "index" : 7,
-        "entries" : [ ]
-      } ],
-      "activeBucket" : 5,
-      "kind" : "HASH_TABLE"
-    }
-  }, {
-    "index" : 3,
-    "line" : 5,
-    "messageKey" : "hashSetAdd.compare",
-    "messageArgs" : {
-      "value" : 13,
-      "other" : 5
-    },
-    "vars" : {
-      "value" : 13,
-      "index" : 5
-    },
-    "view" : {
-      "capacity" : 8,
-      "buckets" : [ {
-        "index" : 0,
-        "entries" : [ {
-          "key" : 8,
-          "state" : "NORMAL"
-        } ]
-      }, {
-        "index" : 1,
-        "entries" : [ ]
-      }, {
-        "index" : 2,
-        "entries" : [ ]
-      }, {
-        "index" : 3,
-        "entries" : [ ]
-      }, {
-        "index" : 4,
-        "entries" : [ ]
-      }, {
-        "index" : 5,
-        "entries" : [ {
-          "key" : 37,
-          "state" : "NORMAL"
-        }, {
-          "key" : 21,
-          "state" : "NORMAL"
-        }, {
-          "key" : 5,
-          "state" : "PROBED"
-        } ]
-      }, {
-        "index" : 6,
-        "entries" : [ ]
-      }, {
-        "index" : 7,
-        "entries" : [ ]
-      } ],
-      "activeBucket" : 5,
-      "kind" : "HASH_TABLE"
-    }
-  }, {
-    "index" : 4,
-    "line" : 10,
-    "messageKey" : "hashSetAdd.insert",
-    "messageArgs" : {
-      "value" : 13,
-      "bucket" : 5
-    },
-    "vars" : {
-      "value" : 13,
-      "index" : 5
-    },
-    "view" : {
-      "capacity" : 8,
-      "buckets" : [ {
-        "index" : 0,
-        "entries" : [ {
-          "key" : 8,
-          "state" : "NORMAL"
-        } ]
-      }, {
-        "index" : 1,
-        "entries" : [ ]
-      }, {
-        "index" : 2,
-        "entries" : [ ]
-      }, {
-        "index" : 3,
-        "entries" : [ ]
-      }, {
-        "index" : 4,
-        "entries" : [ ]
-      }, {
-        "index" : 5,
-        "entries" : [ {
-          "key" : 13,
-          "state" : "INSERTED"
-        }, {
-          "key" : 37,
-          "state" : "NORMAL"
-        }, {
-          "key" : 21,
-          "state" : "NORMAL"
-        }, {
-          "key" : 5,
-          "state" : "NORMAL"
-        } ]
-      }, {
-        "index" : 6,
-        "entries" : [ ]
-      }, {
-        "index" : 7,
-        "entries" : [ ]
-      } ],
-      "activeBucket" : 5,
-      "outcome" : "INSERTED",
+      "outcome" : "DUPLICATE",
       "kind" : "HASH_TABLE"
     }
   } ],
   "result" : {
-    "returnValue" : true,
-    "stepCount" : 5,
+    "returnValue" : false,
+    "stepCount" : 2,
     "measured" : false
   }
 }

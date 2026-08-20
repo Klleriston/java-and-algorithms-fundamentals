@@ -49,7 +49,7 @@ class GoldenTraceTest {
 
     @Test
     void hashSetAddTraceMatchesFixture() throws Exception {
-        assertGolden("hash-set-add", Map.of("values", List.of(5, 21, 37, 8), "value", 13));
+        assertGolden("hash-set-add", Map.of("values", List.of(5, 21, 37, 8), "value", 37));
     }
 
     @Test

@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import fixture from '../../fixtures/hash-map-put.json';
+import setFixture from '../../fixtures/hash-set-add.json';
 import type { HashTableViewPayload, Trace } from '../../types';
 import { HashTableView } from './HashTableView';
 
@@ -39,4 +40,25 @@ it('prints keys alone when entries carry no value, as a set sends them', () => {
   render(<HashTableView view={setLike} />);
   expect(screen.getByTestId('bucket-1').textContent).toBe('17');
   expect(screen.getByTestId('bucket-1').textContent).not.toContain('undefined');
+});
+
+describe('HashTableView, drawing a set', () => {
+  const setTrace = setFixture as unknown as Trace;
+
+  it('prints keys with no value and no stray undefined', () => {
+    const view = setTrace.steps[setTrace.steps.length - 1].view as HashTableViewPayload;
+    render(<HashTableView view={view} />);
+
+    const bucket = screen.getByTestId(`bucket-${view.activeBucket}`);
+    expect(bucket.textContent).not.toContain('undefined');
+    expect(bucket.textContent).not.toContain(':');
+  });
+
+  it('marks the entry the duplicate matched', () => {
+    const view = setTrace.steps[setTrace.steps.length - 1].view as HashTableViewPayload;
+    const matched = view.buckets.flatMap((b) => b.entries).find((e) => e.state === 'MATCHED');
+    expect(matched, 'the set fixture should end on a duplicate').toBeDefined();
+    render(<HashTableView view={view} />);
+    expect(screen.getByText(String(matched!.key))).toHaveAttribute('data-state', 'MATCHED');
+  });
 });
