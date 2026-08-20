@@ -7,11 +7,15 @@ algorithms, data structures, the JVM memory model, and garbage collection.
 
 Requirements: JDK 21, Maven 3.9+, Node 20+.
 
-```bash
-# backend, on http://localhost:8080
-cd backend && mvn spring-boot:run
+Each block runs from the repository root, in its own terminal.
 
-# frontend, on http://localhost:5173 (proxies /api to the backend)
+```bash
+# terminal 1 — backend, on http://localhost:8080
+cd backend && mvn spring-boot:run
+```
+
+```bash
+# terminal 2 — frontend, on http://localhost:5173 (proxies /api to the backend)
 cd frontend && npm install && npm run dev
 ```
 
@@ -21,12 +25,13 @@ Open http://localhost:5173 and pick a demo.
 
 ```bash
 cd backend && mvn -B verify
-cd frontend && npm test
+cd ../frontend && npm test
 ```
 
-The backend golden tests write `frontend/src/fixtures/*.json`, which the
-frontend tests consume. If a backend change alters the trace JSON, regenerate
-them with:
+The backend golden tests compare their output against
+`frontend/src/fixtures/*.json`, the same files the frontend tests consume, so a
+backend change that alters the trace JSON fails the backend build. Once the new
+JSON is the intended one, regenerate the fixtures with:
 
 ```bash
 cd backend && mvn -B test -Dtest=GoldenTraceTest -Dgolden.update=true
