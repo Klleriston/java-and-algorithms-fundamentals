@@ -36,6 +36,25 @@ class BubbleSortDemoTest {
     }
 
     @Test
+    void everyNarratedComparisonIsTrue() {
+        Trace trace = demo.run(DemoParams.of(Map.of("array", List.of(5, 2, 9, 1, 7)), demo.parameters()));
+
+        assertThat(trace.steps()).isNotEmpty();
+        for (TraceStep step : trace.steps()) {
+            Map<String, Object> args = step.messageArgs();
+            if ("bubbleSort.swap".equals(step.messageKey())) {
+                assertThat((Integer) args.get("leftValue"))
+                        .as("swap step %d claims %s > %s", step.index(), args.get("leftValue"), args.get("rightValue"))
+                        .isGreaterThan((Integer) args.get("rightValue"));
+            } else if ("bubbleSort.keep".equals(step.messageKey())) {
+                assertThat((Integer) args.get("leftValue"))
+                        .as("keep step %d claims %s <= %s", step.index(), args.get("leftValue"), args.get("rightValue"))
+                        .isLessThanOrEqualTo((Integer) args.get("rightValue"));
+            }
+        }
+    }
+
+    @Test
     void highlightsTheLineThatNarratesEachStep() {
         Trace trace = demo.run(DemoParams.of(Map.of("array", List.of(5, 2, 9, 1, 7)), demo.parameters()));
         List<TraceStep> steps = trace.steps();

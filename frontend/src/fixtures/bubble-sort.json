@@ -9,8 +9,8 @@
     "messageArgs" : {
       "left" : 0,
       "right" : 1,
-      "leftValue" : 2,
-      "rightValue" : 5
+      "leftValue" : 5,
+      "rightValue" : 2
     },
     "vars" : {
       "i" : 0,
@@ -57,8 +57,8 @@
     "messageArgs" : {
       "left" : 2,
       "right" : 3,
-      "leftValue" : 1,
-      "rightValue" : 9
+      "leftValue" : 9,
+      "rightValue" : 1
     },
     "vars" : {
       "i" : 0,
@@ -81,8 +81,8 @@
     "messageArgs" : {
       "left" : 3,
       "right" : 4,
-      "leftValue" : 7,
-      "rightValue" : 9
+      "leftValue" : 9,
+      "rightValue" : 7
     },
     "vars" : {
       "i" : 0,
@@ -133,8 +133,8 @@
     "messageArgs" : {
       "left" : 1,
       "right" : 2,
-      "leftValue" : 1,
-      "rightValue" : 5
+      "leftValue" : 5,
+      "rightValue" : 1
     },
     "vars" : {
       "i" : 1,
@@ -189,8 +189,8 @@
     "messageArgs" : {
       "left" : 0,
       "right" : 1,
-      "leftValue" : 1,
-      "rightValue" : 2
+      "leftValue" : 2,
+      "rightValue" : 1
     },
     "vars" : {
       "i" : 2,

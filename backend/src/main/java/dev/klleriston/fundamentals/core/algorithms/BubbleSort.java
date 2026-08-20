@@ -18,11 +18,15 @@ public final class BubbleSort {
         for (int i = 0; i < a.length - 1; i++) {
             for (int j = 0; j < a.length - 1 - i; j++) {
                 if (a[j] > a[j + 1]) {
+                    // Read the values before swapping: the narration describes the comparison
+                    // that decided the swap, so post-swap values would make the sentence false.
+                    int leftValue = a[j];
+                    int rightValue = a[j + 1];
                     int tmp = a[j];
                     a[j] = a[j + 1];
                     a[j + 1] = tmp;
                     tracer.step(7, "bubbleSort.swap",
-                            args("left", j, "right", j + 1, "leftValue", a[j], "rightValue", a[j + 1]),
+                            args("left", j, "right", j + 1, "leftValue", leftValue, "rightValue", rightValue),
                             vars(i, j), view(a, i, j, List.of(j, j + 1)));
                 } else {
                     tracer.step(4, "bubbleSort.keep",
