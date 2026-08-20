@@ -17,7 +17,7 @@ public class DemoRegistry {
                 .sorted(Comparator.comparing(Demo::id))
                 .forEach(demo -> {
                     if (byId.putIfAbsent(demo.id(), demo) != null) {
-                        throw new IllegalStateException("Duplicate demo id: " + demo.id());
+                        throw new IllegalStateException("duplicate demo id: " + demo.id());
                     }
                 });
     }

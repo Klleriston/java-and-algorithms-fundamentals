@@ -7,6 +7,7 @@ import { PlayerControls } from '../components/PlayerControls';
 import { VariableTable } from '../components/VariableTable';
 import { viewFor } from '../components/views/registry';
 import { useTracePlayer } from '../hooks/useTracePlayer';
+import { useI18n } from '../i18n/I18nContext';
 import type { DemoSummary, ParameterSpec, Trace } from '../types';
 import './DemoScreen.css';
 
@@ -34,6 +35,7 @@ function toParams(specs: ParameterSpec[], values: Record<string, string>): Recor
 }
 
 export function DemoScreen() {
+  const { t } = useI18n();
   const { id = '' } = useParams();
   const [search, setSearch] = useSearchParams();
   const [demo, setDemo] = useState<DemoSummary | null>(null);
@@ -55,10 +57,12 @@ export function DemoScreen() {
         player.pause();
         player.first();
       } catch (caught) {
-        setError(caught instanceof ApiRequestError ? caught.message : 'Request failed');
+        setError(
+          caught instanceof ApiRequestError ? t(caught.messageKey, caught.messageArgs) : t('error.requestFailed'),
+        );
       }
     },
-    [id, player.first, player.pause],
+    [id, player.first, player.pause, t],
   );
 
   useEffect(() => {
@@ -74,7 +78,7 @@ export function DemoScreen() {
           void execute(found.parameters, startValues);
         }
       })
-      .catch(() => setError('Could not load demos'));
+      .catch(() => setError(t('error.couldNotLoadDemos')));
     return () => {
       cancelled = true;
     };
@@ -85,14 +89,14 @@ export function DemoScreen() {
   const Renderer = viewFor(step?.view.kind ?? '');
 
   if (!demo) {
-    return <p className="demo-screen__loading">{error ?? 'Loading…'}</p>;
+    return <p className="demo-screen__loading">{error ?? t('ui.loading')}</p>;
   }
 
   return (
     <div className="demo-screen">
       <header className="demo-screen__header">
-        <h1>{demo.title}</h1>
-        <p>{demo.description}</p>
+        <h1>{t(demo.titleKey)}</h1>
+        <p>{t(demo.descriptionKey)}</p>
       </header>
 
       <ParameterForm
@@ -115,7 +119,7 @@ export function DemoScreen() {
         <section className="demo-screen__visual">
           <div className="demo-screen__view">{step ? <Renderer view={step.view} /> : null}</div>
           <div className="demo-screen__detail">
-            <p className="demo-screen__message">{step?.message}</p>
+            <p className="demo-screen__message">{step ? t(step.messageKey, step.messageArgs) : null}</p>
             <VariableTable vars={step?.vars ?? {}} />
           </div>
         </section>

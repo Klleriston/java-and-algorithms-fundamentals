@@ -76,6 +76,6 @@ class BinarySearchDemoTest {
     void rejectsUnsortedArray() {
         assertThatThrownBy(() -> run(Map.of("array", List.of(5, 2, 8), "target", 8)))
                 .isInstanceOf(DemoInputException.class)
-                .hasMessageContaining("sorted");
+                .hasMessage("error.arrayNotSorted");
     }
 }

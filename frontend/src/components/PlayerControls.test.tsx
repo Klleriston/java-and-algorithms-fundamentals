@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
+import { I18nProvider } from '../i18n/I18nContext';
 import { PlayerControls } from './PlayerControls';
 
 function setup(overrides: Partial<React.ComponentProps<typeof PlayerControls>> = {}) {
@@ -18,7 +19,11 @@ function setup(overrides: Partial<React.ComponentProps<typeof PlayerControls>> =
     onSpeedChange: vi.fn(),
     ...overrides,
   };
-  render(<PlayerControls {...props} />);
+  render(
+    <I18nProvider>
+      <PlayerControls {...props} />
+    </I18nProvider>,
+  );
   return props;
 }
 

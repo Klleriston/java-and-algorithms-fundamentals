@@ -38,7 +38,9 @@ class DemoParamsTest {
     void rejectsUnknownParameter() {
         assertThatThrownBy(() -> DemoParams.of(Map.of("nope", 1), SPECS))
                 .isInstanceOf(DemoInputException.class)
-                .hasMessageContaining("nope");
+                .hasMessage("error.unknownParameter")
+                .extracting(exception -> ((DemoInputException) exception).messageArgs())
+                .isEqualTo(Map.of("name", "nope"));
     }
 
     @Test
@@ -55,7 +57,9 @@ class DemoParamsTest {
 
         assertThatThrownBy(() -> DemoParams.of(Map.of("array", List.of(1, 2, 3)), shortSpec))
                 .isInstanceOf(DemoInputException.class)
-                .hasMessageContaining("2");
+                .hasMessage("error.arrayTooLong")
+                .extracting(exception -> ((DemoInputException) exception).messageArgs())
+                .isEqualTo(Map.of("maxLength", 2));
     }
 
     @Test

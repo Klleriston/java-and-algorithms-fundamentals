@@ -1,11 +1,16 @@
 {
   "demoId" : "binary-search",
-  "title" : "Binary Search",
+  "titleKey" : "demo.binarySearch.title",
   "sourceCode" : "public static int search(int[] a, int target) {\n    int low = 0;\n    int high = a.length - 1;\n    while (low <= high) {\n        int mid = (low + high) / 2;\n        if (a[mid] == target) {\n            return mid;\n        } else if (a[mid] < target) {\n            low = mid + 1;\n        } else {\n            high = mid - 1;\n        }\n    }\n    return -1;\n}",
   "steps" : [ {
     "index" : 0,
     "line" : 8,
-    "message" : "a[2] = 8 < 20, discard the left half",
+    "messageKey" : "binarySearch.discardLeft",
+    "messageArgs" : {
+      "index" : 2,
+      "value" : 8,
+      "target" : 20
+    },
     "vars" : {
       "low" : 0,
       "high" : 5,
@@ -25,7 +30,12 @@
   }, {
     "index" : 1,
     "line" : 6,
-    "message" : "a[4] = 20 equals 20, found at index 4",
+    "messageKey" : "binarySearch.found",
+    "messageArgs" : {
+      "index" : 4,
+      "value" : 20,
+      "target" : 20
+    },
     "vars" : {
       "low" : 3,
       "high" : 5,

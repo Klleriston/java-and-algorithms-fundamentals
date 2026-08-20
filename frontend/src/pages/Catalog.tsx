@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchDemos } from '../api';
+import { useI18n } from '../i18n/I18nContext';
 import type { DemoSummary } from '../types';
 
 export function Catalog() {
+  const { t } = useI18n();
   const [demos, setDemos] = useState<DemoSummary[]>([]);
   const [error, setError] = useState<string | undefined>();
 
   useEffect(() => {
-    fetchDemos().then(setDemos).catch(() => setError('Could not load demos'));
+    fetchDemos().then(setDemos).catch(() => setError(t('error.couldNotLoadDemos')));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (error) {
@@ -19,17 +22,17 @@ export function Catalog() {
 
   return (
     <main className="catalog">
-      <h1>Java and Algorithms Fundamentals</h1>
+      <h1>{t('ui.appTitle')}</h1>
       {categories.map((category) => (
         <section key={category}>
-          <h2>{category}</h2>
+          <h2>{t(`category.${category}`)}</h2>
           <ul>
             {demos
               .filter((demo) => demo.category === category)
               .map((demo) => (
                 <li key={demo.id}>
                   <Link to={`/demo/${demo.id}`}>
-                    {demo.title} — {demo.description}
+                    {t(demo.titleKey)} — {t(demo.descriptionKey)}
                   </Link>
                 </li>
               ))}

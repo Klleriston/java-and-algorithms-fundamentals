@@ -23,9 +23,9 @@ class TraceTest {
     @Test
     void traceStepsAreUnmodifiable() {
         List<TraceStep> mutable = new ArrayList<>();
-        mutable.add(new TraceStep(0, 1, "start", Map.of("low", 0), sampleView()));
+        mutable.add(new TraceStep(0, 1, "start", Map.of(), Map.of("low", 0), sampleView()));
 
-        Trace trace = new Trace("binary-search", "Binary Search", "code", mutable,
+        Trace trace = new Trace("binary-search", "demo.binarySearch.title", "code", mutable,
                 new TraceResult(1, 1, false));
 
         assertThatThrownBy(() -> trace.steps().add(mutable.get(0)))
@@ -35,11 +35,11 @@ class TraceTest {
     @Test
     void traceDoesNotSeeLaterMutationsOfTheSourceList() {
         List<TraceStep> mutable = new ArrayList<>();
-        mutable.add(new TraceStep(0, 1, "start", Map.of(), sampleView()));
+        mutable.add(new TraceStep(0, 1, "start", Map.of(), Map.of(), sampleView()));
 
-        Trace trace = new Trace("binary-search", "Binary Search", "code", mutable,
+        Trace trace = new Trace("binary-search", "demo.binarySearch.title", "code", mutable,
                 new TraceResult(1, 1, false));
-        mutable.add(new TraceStep(1, 2, "later", Map.of(), sampleView()));
+        mutable.add(new TraceStep(1, 2, "later", Map.of(), Map.of(), sampleView()));
 
         assertThat(trace.steps()).hasSize(1);
     }

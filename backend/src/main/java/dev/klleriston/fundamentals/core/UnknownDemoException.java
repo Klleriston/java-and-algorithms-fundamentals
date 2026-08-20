@@ -5,7 +5,7 @@ public class UnknownDemoException extends RuntimeException {
     private final String demoId;
 
     public UnknownDemoException(String demoId) {
-        super("Unknown demo: " + demoId);
+        super("error.unknownDemo");
         this.demoId = demoId;
     }
 

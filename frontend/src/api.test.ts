@@ -9,11 +9,19 @@ const server = setupServer(
     HttpResponse.json([
       {
         id: 'binary-search',
-        title: 'Binary Search',
+        titleKey: 'demo.binarySearch.title',
         category: 'ALGORITHMS',
-        description: 'desc',
+        descriptionKey: 'demo.binarySearch.description',
         parameters: [
-          { name: 'target', type: 'INT', label: 'Target', required: true, min: -1000, max: 1000, defaultValue: 20 },
+          {
+            name: 'target',
+            type: 'INT',
+            labelKey: 'demo.binarySearch.param.target',
+            required: true,
+            min: -1000,
+            max: 1000,
+            defaultValue: 20,
+          },
         ],
         sourceCode: 'code',
       },
@@ -21,7 +29,10 @@ const server = setupServer(
   ),
   http.post('/api/demos/binary-search/trace', () => HttpResponse.json(binarySearchTrace)),
   http.post('/api/demos/bubble-sort/trace', () =>
-    HttpResponse.json({ error: 'INVALID_INPUT', message: 'array must be sorted ascending', field: 'array' }, { status: 400 }),
+    HttpResponse.json(
+      { error: 'INVALID_INPUT', messageKey: 'error.arrayNotSorted', messageArgs: {}, field: 'array' },
+      { status: 400 },
+    ),
   ),
 );
 
@@ -42,10 +53,11 @@ describe('api', () => {
     expect(trace.steps[0].view.kind).toBe('ARRAY');
   });
 
-  it('throws ApiRequestError carrying message and field', async () => {
+  it('throws ApiRequestError carrying the message key, its args and the field', async () => {
     await expect(runTrace('bubble-sort', {})).rejects.toMatchObject({
       name: 'ApiRequestError',
-      message: 'array must be sorted ascending',
+      messageKey: 'error.arrayNotSorted',
+      messageArgs: {},
       field: 'array',
     });
     await expect(runTrace('bubble-sort', {})).rejects.toBeInstanceOf(ApiRequestError);

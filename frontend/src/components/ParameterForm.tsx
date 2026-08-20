@@ -1,4 +1,5 @@
 import type { FormEvent } from 'react';
+import { useI18n } from '../i18n/I18nContext';
 import type { ParameterSpec } from '../types';
 import './panels.css';
 
@@ -27,6 +28,8 @@ function parse(spec: ParameterSpec, raw: string): unknown {
 }
 
 export function ParameterForm({ specs, values, onChange, onSubmit, error }: ParameterFormProps) {
+  const { t } = useI18n();
+
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const params: Record<string, unknown> = {};
@@ -40,7 +43,7 @@ export function ParameterForm({ specs, values, onChange, onSubmit, error }: Para
     <form className="parameter-form" onSubmit={handleSubmit}>
       {specs.map((spec) => (
         <label key={spec.name} className="parameter-form__field">
-          <span>{spec.label}</span>
+          <span>{t(spec.labelKey)}</span>
           {spec.type === 'ENUM' ? (
             <select value={values[spec.name] ?? ''} onChange={(event) => onChange(spec.name, event.target.value)}>
               {(spec.options ?? []).map((option) => (
@@ -59,7 +62,7 @@ export function ParameterForm({ specs, values, onChange, onSubmit, error }: Para
         </label>
       ))}
 
-      <button type="submit">Run</button>
+      <button type="submit">{t('ui.run')}</button>
 
       {error ? (
         <p role="alert" className="parameter-form__error">

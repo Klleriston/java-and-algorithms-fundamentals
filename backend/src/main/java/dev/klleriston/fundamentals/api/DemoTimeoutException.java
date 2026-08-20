@@ -4,7 +4,14 @@ import java.time.Duration;
 
 public class DemoTimeoutException extends RuntimeException {
 
+    private final Duration limit;
+
     public DemoTimeoutException(Duration limit) {
-        super("The demo took too long to run (limit: " + limit.toSeconds() + "s). Try a smaller input.");
+        super("error.executionTimeout");
+        this.limit = limit;
+    }
+
+    public Duration limit() {
+        return limit;
     }
 }

@@ -19,20 +19,24 @@ public final class BinarySearch {
         while (low <= high) {
             int mid = (low + high) / 2;
             if (a[mid] == target) {
-                tracer.step(6, "a[" + mid + "] = " + a[mid] + " equals " + target + ", found at index " + mid,
+                tracer.step(6, "binarySearch.found",
+                        args("index", mid, "value", a[mid], "target", target),
                         vars(low, high, mid), view(a, low, high, mid));
                 return mid;
             } else if (a[mid] < target) {
-                tracer.step(8, "a[" + mid + "] = " + a[mid] + " < " + target + ", discard the left half",
+                tracer.step(8, "binarySearch.discardLeft",
+                        args("index", mid, "value", a[mid], "target", target),
                         vars(low, high, mid), view(a, low, high, mid));
                 low = mid + 1;
             } else {
-                tracer.step(10, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
+                tracer.step(10, "binarySearch.discardRight",
+                        args("index", mid, "value", a[mid], "target", target),
                         vars(low, high, mid), view(a, low, high, mid));
                 high = mid - 1;
             }
         }
-        tracer.step(14, target + " is not in the array, return -1", vars(low, high, -1), view(a, low, high, -1));
+        tracer.step(14, "binarySearch.absent", args("target", target),
+                vars(low, high, -1), view(a, low, high, -1));
         return -1;
     }
 
@@ -44,6 +48,14 @@ public final class BinarySearch {
             vars.put("mid", mid);
         }
         return vars;
+    }
+
+    private static Map<String, Object> args(Object... pairs) {
+        Map<String, Object> args = new LinkedHashMap<>();
+        for (int i = 0; i < pairs.length; i += 2) {
+            args.put((String) pairs[i], pairs[i + 1]);
+        }
+        return args;
     }
 
     private static ArrayView view(int[] a, int low, int high, int mid) {

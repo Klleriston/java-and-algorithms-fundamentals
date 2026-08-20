@@ -38,6 +38,6 @@ class BinarySearchTest {
 
         assertThat(tracer.steps()).isNotEmpty();
         assertThat(tracer.steps().get(0).vars()).containsKeys("low", "high");
-        assertThat(tracer.steps().get(tracer.steps().size() - 1).message()).contains("found");
+        assertThat(tracer.steps().get(tracer.steps().size() - 1).messageKey()).isEqualTo("binarySearch.found");
     }
 }

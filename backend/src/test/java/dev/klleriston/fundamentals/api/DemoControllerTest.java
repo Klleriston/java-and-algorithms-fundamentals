@@ -62,7 +62,7 @@ class DemoControllerTest {
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.error").value("INVALID_INPUT"))
                 .andExpect(jsonPath("$.field").value("array"))
-                .andExpect(jsonPath("$.message").value("array must be sorted ascending"));
+                .andExpect(jsonPath("$.messageKey").value("error.arrayNotSorted"));
     }
 
     @Test

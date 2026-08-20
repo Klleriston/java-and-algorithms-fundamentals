@@ -18,7 +18,7 @@ public final class DemoParams {
 
         for (String provided : raw.keySet()) {
             if (!byName.containsKey(provided)) {
-                throw new DemoInputException(provided, "Unknown parameter: " + provided);
+                throw new DemoInputException(provided, "error.unknownParameter", Map.of("name", provided));
             }
         }
 
@@ -27,7 +27,7 @@ public final class DemoParams {
             Object value = raw.containsKey(spec.name()) ? raw.get(spec.name()) : spec.defaultValue();
             if (value == null) {
                 if (spec.required()) {
-                    throw new DemoInputException(spec.name(), "Missing required parameter: " + spec.name());
+                    throw new DemoInputException(spec.name(), "error.missingParameter", Map.of("name", spec.name()));
                 }
                 continue;
             }
@@ -46,30 +46,36 @@ public final class DemoParams {
 
     private static int coerceInteger(ParameterSpec spec, Object value) {
         if (!(value instanceof Number number)) {
-            throw new DemoInputException(spec.name(), spec.name() + " must be a number");
+            throw new DemoInputException(spec.name(), "error.notAnInteger", Map.of("name", spec.name()));
         }
         int intValue = number.intValue();
         if (spec.min() != null && intValue < spec.min()) {
-            throw new DemoInputException(spec.name(), spec.name() + " must be at least " + spec.min());
+            throw new DemoInputException(spec.name(), "error.valueOutOfRange", rangeArgs(spec));
         }
         if (spec.max() != null && intValue > spec.max()) {
-            throw new DemoInputException(spec.name(), spec.name() + " must be at most " + spec.max());
+            throw new DemoInputException(spec.name(), "error.valueOutOfRange", rangeArgs(spec));
         }
         return intValue;
     }
 
+    private static Map<String, Object> rangeArgs(ParameterSpec spec) {
+        Map<String, Object> args = new LinkedHashMap<>();
+        args.put("min", spec.min());
+        args.put("max", spec.max());
+        return args;
+    }
+
     private static int[] coerceIntArray(ParameterSpec spec, Object value) {
         if (!(value instanceof List<?> list)) {
-            throw new DemoInputException(spec.name(), spec.name() + " must be an array of integers");
+            throw new DemoInputException(spec.name(), "error.notAnIntegerArray", Map.of("name", spec.name()));
         }
         if (spec.maxLength() != null && list.size() > spec.maxLength()) {
-            throw new DemoInputException(spec.name(),
-                    spec.name() + " must have at most " + spec.maxLength() + " elements");
+            throw new DemoInputException(spec.name(), "error.arrayTooLong", Map.of("maxLength", spec.maxLength()));
         }
         int[] result = new int[list.size()];
         for (int i = 0; i < list.size(); i++) {
             if (!(list.get(i) instanceof Number number)) {
-                throw new DemoInputException(spec.name(), spec.name() + " must contain only integers");
+                throw new DemoInputException(spec.name(), "error.notAnInteger", Map.of("name", spec.name()));
             }
             result[i] = number.intValue();
         }
@@ -78,11 +84,13 @@ public final class DemoParams {
 
     private static String coerceString(ParameterSpec spec, Object value) {
         if (!(value instanceof String text)) {
-            throw new DemoInputException(spec.name(), spec.name() + " must be a string");
+            throw new DemoInputException(spec.name(), "error.notAString", Map.of("name", spec.name()));
         }
         if (spec.options() != null && !spec.options().contains(text)) {
-            throw new DemoInputException(spec.name(),
-                    spec.name() + " must be one of " + String.join(", ", spec.options()));
+            Map<String, Object> args = new LinkedHashMap<>();
+            args.put("name", spec.name());
+            args.put("options", String.join(", ", spec.options()));
+            throw new DemoInputException(spec.name(), "error.invalidOption", args);
         }
         return text;
     }

@@ -14,13 +14,13 @@ class DemoRegistryTest {
     private static Demo stub(String id) {
         return new Demo() {
             @Override public String id() { return id; }
-            @Override public String title() { return id; }
+            @Override public String titleKey() { return "demo." + id + ".title"; }
             @Override public Category category() { return Category.ALGORITHMS; }
-            @Override public String description() { return "stub"; }
+            @Override public String descriptionKey() { return "demo." + id + ".description"; }
             @Override public List<ParameterSpec> parameters() { return List.of(); }
             @Override public String displaySource() { return "code"; }
             @Override public Trace run(DemoParams params) {
-                return new Trace(id, id, "code", List.of(), new TraceResult(null, 0, false));
+                return new Trace(id, "demo." + id + ".title", "code", List.of(), new TraceResult(null, 0, false));
             }
         };
     }
@@ -45,7 +45,9 @@ class DemoRegistryTest {
 
         assertThatThrownBy(() -> registry.require("nope"))
                 .isInstanceOf(UnknownDemoException.class)
-                .hasMessageContaining("nope");
+                .hasMessage("error.unknownDemo")
+                .extracting(exception -> ((UnknownDemoException) exception).demoId())
+                .isEqualTo("nope");
     }
 
     @Test
