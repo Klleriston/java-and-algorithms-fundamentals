@@ -27,3 +27,11 @@ describe('TreeView', () => {
     expect(screen.getByTestId(`node-${view.insertedNode}`)).toHaveAttribute('data-inserted', 'true');
   });
 });
+
+it('draws a leaf whose child fields are absent from the payload', () => {
+  const view = trace.steps[trace.steps.length - 1].view as TreeViewPayload;
+  const leaf = view.nodes.find((node) => node.left == null && node.right == null);
+  expect(leaf, 'the fixture should contain at least one leaf').toBeDefined();
+  render(<TreeView view={view} />);
+  expect(screen.getByTestId(`node-${leaf!.id}`)).toBeInTheDocument();
+});

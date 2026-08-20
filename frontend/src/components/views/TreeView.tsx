@@ -14,8 +14,8 @@ function place(view: TreeViewPayload): Placed[] {
   const placed: Placed[] = [];
   let column = 0;
 
-  const walk = (id: number | null, depth: number) => {
-    if (id === null) return;
+  const walk = (id: number | null | undefined, depth: number) => {
+    if (id == null) return;
     const node = byId.get(id);
     if (node === undefined) return;
     walk(node.left, depth + 1);
