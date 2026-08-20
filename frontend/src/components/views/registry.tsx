@@ -4,12 +4,14 @@ import { ArrayView } from './ArrayView';
 import { TreeView } from './TreeView';
 import { FallbackView } from './FallbackView';
 import { HashTableView } from './HashTableView';
+import { LinkedListView } from './LinkedListView';
 
 // Later phases register new kinds here and nowhere else.
 const renderers: Record<string, ComponentType<{ view: any }>> = {
   ARRAY: ArrayView,
   HASH_TABLE: HashTableView,
   TREE: TreeView,
+  LINKED_LIST: LinkedListView,
 };
 
 export function viewFor(kind: string): ComponentType<{ view: ViewPayload }> {
