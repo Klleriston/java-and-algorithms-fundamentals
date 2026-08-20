@@ -3,10 +3,12 @@ import type { ViewPayload } from '../../types';
 import { ArrayView } from './ArrayView';
 import { TreeView } from './TreeView';
 import { FallbackView } from './FallbackView';
+import { HashTableView } from './HashTableView';
 
 // Later phases register new kinds here and nowhere else.
 const renderers: Record<string, ComponentType<{ view: any }>> = {
   ARRAY: ArrayView,
+  HASH_TABLE: HashTableView,
   TREE: TreeView,
 };
 

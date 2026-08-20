@@ -8,6 +8,18 @@ export interface ArrayViewPayload {
   swapped: number[];
 }
 
+export type HashEntryState = 'NORMAL' | 'PROBED' | 'MATCHED' | 'INSERTED';
+
+export interface HashTableViewPayload {
+  kind: 'HASH_TABLE';
+  capacity: number;
+  // The backend serializes with non_null inclusion, so a null value, bucket or
+  // outcome arrives as an absent field rather than as null.
+  buckets: { index: number; entries: { key: number; value?: number | null; state: HashEntryState }[] }[];
+  activeBucket?: number | null;
+  outcome?: 'INSERTED' | 'UPDATED' | 'DUPLICATE' | null;
+}
+
 // The backend serializes with non_null inclusion, so a null child, cursor or
 // outcome arrives as an absent field rather than as null. The optional markers
 // are what the wire actually looks like.
@@ -24,7 +36,11 @@ export interface UnknownViewPayload {
   [key: string]: unknown;
 }
 
-export type ViewPayload = ArrayViewPayload | TreeViewPayload | UnknownViewPayload;
+export type ViewPayload =
+  | ArrayViewPayload
+  | HashTableViewPayload
+  | TreeViewPayload
+  | UnknownViewPayload;
 
 export interface TraceStep {
   index: number;
