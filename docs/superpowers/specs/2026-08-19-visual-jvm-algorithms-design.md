@@ -328,6 +328,11 @@ from the default local run.
 
 ## 10. Delivery phases
 
+> **Superseded for phases 2 onward** by
+> `2026-08-20-phase-2-data-structures-i18n-design.md`. Phase 2 is now four data
+> structure demos plus Portuguese and English narration; OOP moves to phase 3
+> and the JVM memory model and GC to phase 4. Phase 1 below shipped as written.
+
 One architecture, delivered in four phases. Each phase ends with a working,
 deployable app.
 
