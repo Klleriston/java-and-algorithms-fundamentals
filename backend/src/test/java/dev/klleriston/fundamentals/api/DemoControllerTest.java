@@ -28,7 +28,8 @@ class DemoControllerTest {
                 .andExpect(jsonPath("$[0].parameters[0].name").value("array"))
                 .andExpect(jsonPath("$[0].parameters[0].type").value("INT_ARRAY"))
                 .andExpect(jsonPath("$[0].sourceCode").isNotEmpty())
-                .andExpect(jsonPath("$[1].id").value("bubble-sort"));
+                .andExpect(jsonPath("$[1].id").value("bst-insert"))
+                .andExpect(jsonPath("$[2].id").value("bubble-sort"));
     }
 
     @Test
