@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ApiRequestError, fetchDemos, runTrace } from '../api';
 import { CodePanel } from '../components/CodePanel';
 import { ParameterForm } from '../components/ParameterForm';
@@ -88,56 +88,62 @@ export function DemoScreen() {
   const step = useMemo(() => trace?.steps[player.index], [trace, player.index]);
   const Renderer = viewFor(step?.view.kind ?? '');
 
-  if (!demo) {
-    return <p className="demo-screen__loading">{error ?? t('ui.loading')}</p>;
-  }
-
   return (
     <div className="demo-screen">
-      <header className="demo-screen__header">
-        <h1>{t(demo.titleKey)}</h1>
-        <p>{t(demo.descriptionKey)}</p>
-      </header>
+      <Link className="back-link" to="/">
+        ← {t('ui.back')}
+      </Link>
 
-      <ParameterForm
-        specs={demo.parameters}
-        values={values}
-        error={error}
-        onChange={(name, value) => setValues((current) => ({ ...current, [name]: value }))}
-        onSubmit={() => {
-          const next = new URLSearchParams(search);
-          demo.parameters.forEach((spec) => next.set(spec.name, values[spec.name] ?? ''));
-          setSearch(next, { replace: true });
-          void execute(demo.parameters, values);
-        }}
-      />
+      {!demo ? (
+        <p className="demo-screen__loading">{error ?? t('ui.loading')}</p>
+      ) : (
+        <>
+          <header className="demo-screen__header">
+            <h1>{t(demo.titleKey)}</h1>
+            <p>{t(demo.descriptionKey)}</p>
+          </header>
 
-      <div className="demo-screen__split">
-        <section className="demo-screen__code">
-          <CodePanel source={trace?.sourceCode ?? demo.sourceCode} activeLine={step?.line ?? -1} />
-        </section>
-        <section className="demo-screen__visual">
-          <div className="demo-screen__view">{step ? <Renderer view={step.view} /> : null}</div>
-          <div className="demo-screen__detail">
-            <p className="demo-screen__message">{step ? t(step.messageKey, step.messageArgs) : null}</p>
-            <VariableTable vars={step?.vars ?? {}} />
+          <ParameterForm
+            specs={demo.parameters}
+            values={values}
+            error={error}
+            onChange={(name, value) => setValues((current) => ({ ...current, [name]: value }))}
+            onSubmit={() => {
+              const next = new URLSearchParams(search);
+              demo.parameters.forEach((spec) => next.set(spec.name, values[spec.name] ?? ''));
+              setSearch(next, { replace: true });
+              void execute(demo.parameters, values);
+            }}
+          />
+
+          <div className="demo-screen__split">
+            <section className="demo-screen__code">
+              <CodePanel source={trace?.sourceCode ?? demo.sourceCode} activeLine={step?.line ?? -1} />
+            </section>
+            <section className="demo-screen__visual">
+              <div className="demo-screen__view">{step ? <Renderer view={step.view} /> : null}</div>
+              <div className="demo-screen__detail">
+                <p className="demo-screen__message">{step ? t(step.messageKey, step.messageArgs) : null}</p>
+                <VariableTable vars={step?.vars ?? {}} />
+              </div>
+            </section>
           </div>
-        </section>
-      </div>
 
-      <PlayerControls
-        index={player.index}
-        stepCount={trace?.steps.length ?? 0}
-        playing={player.playing}
-        speedMs={player.speedMs}
-        onFirst={player.first}
-        onPrev={player.prev}
-        onToggle={player.toggle}
-        onNext={player.next}
-        onLast={player.last}
-        onSeek={player.seek}
-        onSpeedChange={player.setSpeed}
-      />
+          <PlayerControls
+            index={player.index}
+            stepCount={trace?.steps.length ?? 0}
+            playing={player.playing}
+            speedMs={player.speedMs}
+            onFirst={player.first}
+            onPrev={player.prev}
+            onToggle={player.toggle}
+            onNext={player.next}
+            onLast={player.last}
+            onSeek={player.seek}
+            onSpeedChange={player.setSpeed}
+          />
+        </>
+      )}
     </div>
   );
 }

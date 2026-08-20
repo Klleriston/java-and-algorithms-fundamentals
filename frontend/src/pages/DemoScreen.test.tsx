@@ -133,4 +133,21 @@ describe('DemoScreen', () => {
     );
     expect(screen.getByText(`step 1 / ${binarySearchTrace.steps.length}`)).toBeInTheDocument();
   });
+
+  it('offers a way back to the catalog', async () => {
+    renderScreen();
+    const back = await screen.findByRole('link', { name: /demos/i });
+    expect(back).toHaveAttribute('href', '/');
+  });
+
+  it('still offers the way back when the run failed', async () => {
+    server.use(
+      http.post('/api/demos/binary-search/trace', () =>
+        HttpResponse.json({ error: 'INVALID_INPUT', messageKey: 'error.arrayNotSorted', messageArgs: {}, field: 'array' }, { status: 400 }),
+      ),
+    );
+    renderScreen();
+    await screen.findByRole('alert');
+    expect(screen.getByRole('link', { name: /demos/i })).toHaveAttribute('href', '/');
+  });
 });
