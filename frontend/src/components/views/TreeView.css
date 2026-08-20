@@ -1,0 +1,35 @@
+.tree {
+  position: relative;
+  min-width: 100%;
+  padding: 12px 28px;
+  overflow-x: auto;
+}
+
+.tree-node {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #3c3c3c;
+  border-radius: 50%;
+  background: #252526;
+  color: #e6e6e6;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.tree-node[data-on-path='true'] {
+  border-color: #4aa3ff;
+}
+
+.tree-node[data-active='true'] {
+  border-color: #4aa3ff;
+  box-shadow: 0 0 0 2px rgba(74, 163, 255, 0.35);
+}
+
+.tree-node[data-inserted='true'] {
+  background: #4a3a1f;
+  border-color: #d1a34a;
+}
