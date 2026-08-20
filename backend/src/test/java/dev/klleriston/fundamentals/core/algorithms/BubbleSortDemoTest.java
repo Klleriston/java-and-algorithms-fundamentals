@@ -4,6 +4,7 @@ import dev.klleriston.fundamentals.core.Category;
 import dev.klleriston.fundamentals.core.DemoParams;
 import dev.klleriston.fundamentals.trace.ArrayView;
 import dev.klleriston.fundamentals.trace.Trace;
+import dev.klleriston.fundamentals.trace.TraceStep;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -32,6 +33,24 @@ class BubbleSortDemoTest {
         assertThat(trace.steps()).anySatisfy(step ->
                 assertThat(((ArrayView) step.view()).ranges())
                         .anyMatch(range -> range.state().equals(ArrayView.Range.SORTED)));
+    }
+
+    @Test
+    void highlightsTheLineThatNarratesEachStep() {
+        Trace trace = demo.run(DemoParams.of(Map.of("array", List.of(5, 2, 9, 1, 7)), demo.parameters()));
+        List<TraceStep> steps = trace.steps();
+
+        assertThat(steps).allSatisfy(step -> {
+            ArrayView view = (ArrayView) step.view();
+            if (!view.swapped().isEmpty()) {
+                assertThat(step.line()).isEqualTo(7);
+            }
+        });
+        assertThat(steps.subList(0, steps.size() - 1))
+                .filteredOn(step -> ((ArrayView) step.view()).swapped().isEmpty())
+                .isNotEmpty()
+                .allSatisfy(step -> assertThat(step.line()).isEqualTo(4));
+        assertThat(steps.get(steps.size() - 1).line()).isEqualTo(11);
     }
 
     @Test

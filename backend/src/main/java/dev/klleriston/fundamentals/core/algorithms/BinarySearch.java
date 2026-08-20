@@ -27,7 +27,7 @@ public final class BinarySearch {
                         vars(low, high, mid), view(a, low, high, mid));
                 low = mid + 1;
             } else {
-                tracer.step(11, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
+                tracer.step(10, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
                         vars(low, high, mid), view(a, low, high, mid));
                 high = mid - 1;
             }
