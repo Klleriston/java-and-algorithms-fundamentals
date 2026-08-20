@@ -19,9 +19,11 @@ import java.util.Map;
 public class DemoController {
 
     private final DemoRegistry registry;
+    private final DemoExecutor executor;
 
-    public DemoController(DemoRegistry registry) {
+    public DemoController(DemoRegistry registry, DemoExecutor executor) {
         this.registry = registry;
+        this.executor = executor;
     }
 
     @GetMapping
@@ -33,6 +35,6 @@ public class DemoController {
     public Trace trace(@PathVariable String id, @RequestBody(required = false) Map<String, Object> body) {
         Demo demo = registry.require(id);
         DemoParams params = DemoParams.of(body == null ? Map.of() : body, demo.parameters());
-        return demo.run(params);
+        return executor.run(demo, params);
     }
 }

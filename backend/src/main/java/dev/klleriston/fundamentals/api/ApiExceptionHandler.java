@@ -28,4 +28,10 @@ public class ApiExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ApiError("UNKNOWN_DEMO", exception.getMessage(), null));
     }
+
+    @ExceptionHandler(DemoTimeoutException.class)
+    public ResponseEntity<ApiError> handleTimeout(DemoTimeoutException exception) {
+        return ResponseEntity.badRequest()
+                .body(new ApiError("EXECUTION_TIMEOUT", exception.getMessage(), null));
+    }
 }
