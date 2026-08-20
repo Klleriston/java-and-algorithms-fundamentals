@@ -6,3 +6,4 @@ dist/
 *.iml
 .DS_Store
 .claude/
+*.tsbuildinfo
