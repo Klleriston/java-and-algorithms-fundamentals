@@ -47,6 +47,11 @@ class GoldenTraceTest {
         assertGolden("hash-map-put", Map.of("keys", List.of(5, 21, 37, 8), "key", 13, "value", 99));
     }
 
+    @Test
+    void bstInsertTraceMatchesFixture() throws Exception {
+        assertGolden("bst-insert", Map.of("values", List.of(50, 30, 70, 20, 40, 60), "value", 35));
+    }
+
     private void assertGolden(String demoId, Map<String, Object> params) throws Exception {
         Demo demo = registry.require(demoId);
         String actual = mapper().writeValueAsString(demo.run(DemoParams.of(params, demo.parameters())));

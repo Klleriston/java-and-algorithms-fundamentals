@@ -9,8 +9,8 @@ describe('viewFor', () => {
   });
 
   it('falls back for an unknown kind without crashing', () => {
-    const Renderer = viewFor('TREE');
-    render(<Renderer view={{ kind: 'TREE', nodes: [] }} />);
-    expect(screen.getByText(/TREE/)).toBeInTheDocument();
+    const Renderer = viewFor('MYSTERY');
+    render(<Renderer view={{ kind: 'MYSTERY', nodes: [] }} />);
+    expect(screen.getByText(/MYSTERY/)).toBeInTheDocument();
   });
 });
