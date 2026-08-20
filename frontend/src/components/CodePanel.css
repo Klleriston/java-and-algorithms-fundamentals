@@ -1,0 +1,30 @@
+.code-panel {
+  margin: 0;
+  padding: 12px 0;
+  overflow: auto;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.6;
+  height: 100%;
+}
+
+.code-line {
+  display: flex;
+  gap: 12px;
+  padding: 0 12px;
+  white-space: pre;
+}
+
+.code-line--active {
+  background: #2f3b52;
+  box-shadow: inset 3px 0 0 #4aa3ff;
+}
+
+.code-line__gutter {
+  width: 2ch;
+  text-align: right;
+  color: #6b6b6b;
+  user-select: none;
+}
