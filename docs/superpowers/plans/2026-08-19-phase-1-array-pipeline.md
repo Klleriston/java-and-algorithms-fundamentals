@@ -1184,7 +1184,7 @@ public final class BinarySearch {
                         vars(low, high, mid), view(a, low, high, mid));
                 low = mid + 1;
             } else {
-                tracer.step(11, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
+                tracer.step(10, "a[" + mid + "] = " + a[mid] + " > " + target + ", discard the right half",
                         vars(low, high, mid), view(a, low, high, mid));
                 high = mid - 1;
             }
@@ -1484,7 +1484,7 @@ public final class BubbleSort {
                     int tmp = a[j];
                     a[j] = a[j + 1];
                     a[j + 1] = tmp;
-                    tracer.step(6, "a[" + j + "] > a[" + (j + 1) + "], swap them",
+                    tracer.step(7, "a[" + j + "] > a[" + (j + 1) + "], swap them",
                             vars(i, j), view(a, i, j, List.of(j, j + 1)));
                 } else {
                     tracer.step(4, "a[" + j + "] <= a[" + (j + 1) + "], keep the order",

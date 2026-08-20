@@ -5,6 +5,7 @@ import dev.klleriston.fundamentals.core.DemoInputException;
 import dev.klleriston.fundamentals.core.DemoParams;
 import dev.klleriston.fundamentals.trace.ArrayView;
 import dev.klleriston.fundamentals.trace.Trace;
+import dev.klleriston.fundamentals.trace.TraceStep;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -52,6 +53,23 @@ class BinarySearchDemoTest {
         assertThat(lastView.pointers()).containsKey("mid");
         assertThat(trace.steps()).anySatisfy(step ->
                 assertThat(((ArrayView) step.view()).ranges()).isNotEmpty());
+    }
+
+    @Test
+    void highlightsTheLineThatNarratesEachDecision() {
+        List<Integer> array = List.of(2, 5, 8, 12, 20, 33);
+
+        assertThat(run(Map.of("array", array, "target", 20)).steps())
+                .extracting(TraceStep::line)
+                .containsExactly(8, 6);
+
+        assertThat(run(Map.of("array", array, "target", 2)).steps())
+                .extracting(TraceStep::line)
+                .containsExactly(10, 6);
+
+        assertThat(run(Map.of("array", array, "target", 7)).steps())
+                .extracting(TraceStep::line)
+                .containsExactly(10, 8, 8, 14);
     }
 
     @Test
