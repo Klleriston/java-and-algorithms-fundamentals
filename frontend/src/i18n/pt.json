@@ -53,6 +53,7 @@
   "error.notAnIntegerArray": "O parâmetro {name} precisa ser um array de números inteiros",
   "error.positionPastTheEnd": "A posição {position} passa do fim de uma lista com {size} valores",
   "error.requestFailed": "A requisição falhou com status {status}",
+  "error.staticMode": "Esta versão publicada reproduz execuções gravadas, então os parâmetros são fixos. Rode o projeto localmente com o backend Java para mudá-los.",
   "error.stepLimitExceeded": "A demo passou de {maxSteps} passos",
   "error.unknownDemo": "Não existe demo chamada {id}",
   "error.unknownParameter": "O parâmetro {name} não é reconhecido",
@@ -77,6 +78,7 @@
   "ui.loading": "Carregando…",
   "ui.noVariables": "Nenhuma variável neste passo.",
   "ui.run": "Executar",
+  "ui.staticNotice": "Demo publicada: execuções gravadas, parâmetros fixos. Rode localmente para mudar a entrada.",
   "ui.step": "passo {current} / {total}",
   "ui.variables": "Variáveis"
 }

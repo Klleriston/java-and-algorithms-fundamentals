@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useParams, useSearchParams } from 'react-router-dom';
 import { ApiRequestError, fetchDemos, runTrace } from '../api';
+import { STATIC_MODE } from '../staticData';
 import { CodePanel } from '../components/CodePanel';
 import { ParameterForm } from '../components/ParameterForm';
 import { PlayerControls } from '../components/PlayerControls';
@@ -90,6 +91,12 @@ export function DemoScreen() {
 
   return (
     <div className="demo-screen">
+      {STATIC_MODE && (
+        <p className="static-notice" role="note">
+          {t('ui.staticNotice')}
+        </p>
+      )}
+
       <Link className="back-link" to="/">
         ← {t('ui.back')}
       </Link>
