@@ -1612,6 +1612,7 @@ git commit -m "feat: add bubble sort demo"
 - Create: `backend/src/main/java/dev/klleriston/fundamentals/api/ApiError.java`
 - Create: `backend/src/main/java/dev/klleriston/fundamentals/api/DemoController.java`
 - Create: `backend/src/main/java/dev/klleriston/fundamentals/api/ApiExceptionHandler.java`
+- Create: `backend/src/main/java/dev/klleriston/fundamentals/api/JacksonConfig.java`
 - Test: `backend/src/test/java/dev/klleriston/fundamentals/api/DemoControllerTest.java`
 
 **Interfaces:**
@@ -1621,7 +1622,7 @@ git commit -m "feat: add bubble sort demo"
   - `POST /api/demos/{id}/trace` with a JSON object body of parameters → `Trace`.
   - `record ApiError(String error, String message, String field)`.
 
-Jackson serializes `ViewPayload` implementations by their record components; `kind()` is a no-arg getter on the interface, so it appears in JSON as `"kind"` automatically. The controller test asserts this, because the frontend's renderer lookup depends on it.
+Jackson serializes `ViewPayload` implementations by their record components, but it does **not** pick up `kind()`: auto-detection only covers `getX()`/`isX()` accessors. Since the `trace` package carries no Jackson annotations by design, the mapping lives in the `api` layer as a mix-in registered through a `Module` bean (`JacksonConfig`). The controller test asserts `view.kind` is present, because the frontend's renderer lookup depends on it.
 
 - [ ] **Step 1: Write the failing test**
 
