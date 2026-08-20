@@ -1,0 +1,7 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: fundamentals-backend
+  jackson:
+    default-property-inclusion: non_null
