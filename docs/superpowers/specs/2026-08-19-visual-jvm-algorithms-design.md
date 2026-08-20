@@ -15,6 +15,10 @@ content share one architecture:
   structure change while the corresponding line of Java is highlighted.
 - **JVM internals** — the memory model (stack frames, heap objects, metaspace)
   and garbage collection (generations, promotion, collection pauses).
+- **Object-oriented programming** — inheritance, polymorphism, and
+  encapsulation, shown as they behave at runtime: which constructor runs when,
+  which method implementation the JVM actually selects, and what access
+  modifiers protect.
 
 Everything on the algorithm side is real Java executed on the server. The GC
 module runs a real child JVM and reports measured numbers, not an animation.
@@ -86,7 +90,7 @@ Each demo registers itself as a Spring bean implementing `Demo`:
 public interface Demo {
     String id();                      // "binary-search"
     String title();
-    Category category();              // ALGORITHMS | DATA_STRUCTURES | JVM
+    Category category();              // ALGORITHMS | DATA_STRUCTURES | JVM | OOP
     String description();
     List<ParameterSpec> parameters();  // drives the frontend form
     String displaySource();            // clean Java source shown to the learner
@@ -145,7 +149,8 @@ that ships a new kind first never breaks the page.
 | `ARRAY` | binary search, bubble sort | `items`, `pointers` (name → index), `ranges` (`from`, `to`, `state`: `DISCARDED` \| `SORTED` \| `ACTIVE`), `swapped` (pair of indices, optional) |
 | `TREE` | binary tree | `nodes` (`id`, `value`, `left`, `right`), `rootId`, `currentId`, `visitedIds`, `pathIds` |
 | `HASH_TABLE` | hashset | `capacity`, `loadFactor`, `buckets` (`index`, `entries`: `key`, `hash`, `state`), `currentBucket`, `resizing` |
-| `MEMORY` | jvm-memory | `frames` (`method`, `slots`: `name`, `value` or `refId`), `objects` (`id`, `type`, `fields`, `reachable`), `metaspaceClasses` |
+| `MEMORY` | jvm-memory, inheritance, encapsulation | `frames` (`method`, `slots`: `name`, `value` or `refId`), `objects` (`id`, `type`, `fields`, `reachable`), `metaspaceClasses`. Each field carries `visibility` (`PRIVATE` \| `PROTECTED` \| `PUBLIC` \| `PACKAGE`) and an optional `access` marker (`ALLOWED` \| `REJECTED`) so encapsulation steps can show a blocked access |
+| `CLASS_HIERARCHY` | polymorphism, inheritance | `classes` (`name`, `superName`, `methods`: `signature`, `declared`, `overrides`, `abstract`), `declaredType`, `runtimeType`, `invokedSignature`, `resolvedIn` (class whose implementation runs), `lookupPath` (classes walked during dispatch) |
 | `GC` | gc | `collector`, `pools` (`name`: `EDEN` \| `SURVIVOR_0` \| `SURVIVOR_1` \| `OLD` \| `METASPACE`, `usedBytes`, `capacityBytes`), `event` (`type`: `MINOR` \| `MAJOR`, `cause`, `pauseMillis`, `beforeBytes`, `afterBytes`), `uptimeMillis` |
 
 ### 4.2 Parameter schema
@@ -303,7 +308,7 @@ from the default local run.
 
 ## 10. Delivery phases
 
-One architecture, delivered in three phases. Each phase ends with a working,
+One architecture, delivered in four phases. Each phase ends with a working,
 deployable app.
 
 **Phase 1 — pipeline and `ARRAY`**
@@ -324,13 +329,30 @@ becomes unreachable when a frame pops) via the in-process tracer, and `gc` via
 the child JVM runner with measured pool sizes and pause times. The learner picks
 heap size, collector, and allocation workload, and can compare collectors.
 
+**Phase 4 — OOP**
+Three demos and one new renderer.
+
+- `inheritance` — constructor chaining. A `new Dog()` walks up to `Object` and
+  back down; the `MEMORY` view shows the single object growing its inherited
+  fields while the `CLASS_HIERARCHY` view shows where each constructor lives.
+  Field shadowing is included, because it is where the mental model usually
+  breaks: fields resolve by declared type, methods by runtime type.
+- `polymorphism` — dynamic dispatch. `Animal a = new Dog(); a.speak();` The
+  `CLASS_HIERARCHY` view marks the declared type, the runtime type, and the
+  lookup path the JVM walks to find the implementation that runs. Compares an
+  overridden method with a `static` method, which does not dispatch dynamically.
+- `encapsulation` — a class with an invariant (a balance that must never go
+  negative). Mutating through the method is accepted and the invariant holds;
+  the step showing a direct field write is marked `REJECTED` with the compiler
+  error text, making visible what `private` actually buys.
+
+Backend work is three `Demo` classes on the existing in-process tracer. Frontend
+work is one new renderer, `ClassHierarchyView`, plus extending `MemoryView` to
+draw field visibility and access markers.
+
 ## 11. Future work, explicitly out of scope now
 
 - A code editor with a real sandbox for arbitrary Java.
-- An OOP module (inheritance, polymorphism, encapsulation) visualizing dynamic
-  dispatch and class hierarchies. Raised as a goal in the original brief and
-  deferred out of this spec; it fits the same trace model with a
-  `CLASS_HIERARCHY` view kind.
 - Additional JVM topics: JIT compilation tiers, class loading order, bytecode
   disassembly.
 - More algorithms (merge sort, graph traversal, dynamic programming).
