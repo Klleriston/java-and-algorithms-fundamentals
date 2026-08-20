@@ -62,6 +62,26 @@ class GoldenTraceTest {
         assertGolden("linked-list-insert", Map.of("values", List.of(10, 20, 30, 40), "position", 2, "value", 25));
     }
 
+    /**
+     * The catalog the API returns, frozen as a fixture. The frontend tests read it, and the
+     * static build published to GitHub Pages serves it in place of a live backend.
+     */
+    @Test
+    void catalogMatchesFixture() throws Exception {
+        List<DemoSummary> catalog = registry.all().stream().map(DemoSummary::from).toList();
+        String actual = mapper().writeValueAsString(catalog);
+
+        Path fixture = FIXTURES.resolve("demos.json");
+        if (Boolean.getBoolean("golden.update") || !Files.exists(fixture)) {
+            Files.createDirectories(FIXTURES);
+            Files.writeString(fixture, actual + System.lineSeparator());
+        }
+
+        assertThat(Files.readString(fixture).trim())
+                .as("Fixture %s is stale. Regenerate with -Dgolden.update=true", fixture)
+                .isEqualTo(actual.trim());
+    }
+
     private void assertGolden(String demoId, Map<String, Object> params) throws Exception {
         Demo demo = registry.require(demoId);
         String actual = mapper().writeValueAsString(demo.run(DemoParams.of(params, demo.parameters())));

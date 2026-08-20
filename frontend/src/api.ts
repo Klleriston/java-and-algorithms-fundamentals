@@ -1,4 +1,5 @@
 import type { DemoSummary, Trace } from './types';
+import { STATIC_MODE, isDefaultParams, staticDemos, staticTrace } from './staticData';
 
 export class ApiRequestError extends Error {
   readonly field?: string;
@@ -35,10 +36,23 @@ async function parseOrThrow<T>(response: Response): Promise<T> {
 }
 
 export async function fetchDemos(): Promise<DemoSummary[]> {
+  if (STATIC_MODE) return staticDemos();
   return parseOrThrow<DemoSummary[]>(await fetch('/api/demos'));
 }
 
 export async function runTrace(id: string, params: Record<string, unknown>): Promise<Trace> {
+  if (STATIC_MODE) {
+    const recorded = staticTrace(id);
+    if (recorded === undefined) {
+      throw new ApiRequestError('error.unknownDemo', { id });
+    }
+    // Returning the recorded run for changed parameters would answer a question nobody asked.
+    if (!isDefaultParams(id, params)) {
+      throw new ApiRequestError('error.staticMode', {});
+    }
+    return recorded;
+  }
+
   const response = await fetch(`/api/demos/${id}/trace`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

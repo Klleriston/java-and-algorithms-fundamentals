@@ -53,6 +53,7 @@
   "error.notAnIntegerArray": "The parameter {name} must be an array of whole numbers",
   "error.positionPastTheEnd": "Position {position} is past the end of a list with {size} values",
   "error.requestFailed": "The request failed with status {status}",
+  "error.staticMode": "This published build replays recorded runs, so the parameters are fixed. Run the project locally with the Java backend to change them.",
   "error.stepLimitExceeded": "The demo produced more than {maxSteps} steps",
   "error.unknownDemo": "There is no demo called {id}",
   "error.unknownParameter": "The parameter {name} is not recognized",
@@ -77,6 +78,7 @@
   "ui.loading": "Loading…",
   "ui.noVariables": "No variables at this step.",
   "ui.run": "Run",
+  "ui.staticNotice": "Published demo: recorded runs, fixed parameters. Run it locally to change the input.",
   "ui.step": "step {current} / {total}",
   "ui.variables": "Variables"
 }

@@ -5,7 +5,7 @@ import { DemoScreen } from './pages/DemoScreen';
 
 export function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <header className="app-header">
         <LanguageToggle />
       </header>

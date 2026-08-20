@@ -83,3 +83,13 @@
   color: #6fb3ff;
   text-decoration: underline;
 }
+
+.static-notice {
+  margin: 0 0 12px;
+  padding: 8px 12px;
+  border: 1px solid #3d4b5c;
+  border-radius: 6px;
+  background: #1b2430;
+  color: #9aa4b2;
+  font-size: 0.85rem;
+}
