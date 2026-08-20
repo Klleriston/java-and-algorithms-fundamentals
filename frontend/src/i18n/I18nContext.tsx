@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
 import { format } from './format';
 import en from './en.json';
 import pt from './pt.json';
@@ -6,6 +6,7 @@ import pt from './pt.json';
 export type Lang = 'pt' | 'en';
 
 const catalogs: Record<Lang, Record<string, string>> = { pt, en };
+const STORAGE_KEY = 'lang';
 
 interface I18n {
   lang: Lang;
@@ -16,11 +17,24 @@ interface I18n {
 const I18nContext = createContext<I18n | undefined>(undefined);
 
 export function detectLang(): Lang {
+  const stored = localStorage.getItem(STORAGE_KEY);
+  if (stored === 'pt' || stored === 'en') {
+    return stored;
+  }
   return navigator.language.toLowerCase().startsWith('pt') ? 'pt' : 'en';
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<Lang>(detectLang);
+  const [lang, setLangState] = useState<Lang>(detectLang);
+
+  const setLang = useCallback((next: Lang) => {
+    localStorage.setItem(STORAGE_KEY, next);
+    setLangState(next);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+  }, [lang]);
 
   const t = useCallback(
     (key: string, args: Record<string, unknown> = {}) => {
