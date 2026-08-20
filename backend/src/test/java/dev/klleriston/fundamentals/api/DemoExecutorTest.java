@@ -22,9 +22,9 @@ class DemoExecutorTest {
     private static Demo demoRunning(Supplier<Trace> body) {
         return new Demo() {
             @Override public String id() { return "stub"; }
-            @Override public String title() { return "Stub"; }
+            @Override public String titleKey() { return "demo.stub.title"; }
             @Override public Category category() { return Category.ALGORITHMS; }
-            @Override public String description() { return "stub"; }
+            @Override public String descriptionKey() { return "demo.stub.description"; }
             @Override public List<ParameterSpec> parameters() { return List.of(); }
             @Override public String displaySource() { return "code"; }
             @Override public Trace run(DemoParams params) { return body.get(); }
@@ -32,7 +32,7 @@ class DemoExecutorTest {
     }
 
     private static Trace emptyTrace() {
-        return new Trace("stub", "Stub", "code", List.of(), new TraceResult(null, 0, false));
+        return new Trace("stub", "demo.stub.title", "code", List.of(), new TraceResult(null, 0, false));
     }
 
     @Test
@@ -59,7 +59,7 @@ class DemoExecutorTest {
 
         assertThatThrownBy(() -> executor.run(slow, DemoParams.of(Map.of(), List.of())))
                 .isInstanceOf(DemoTimeoutException.class)
-                .hasMessageContaining("too long");
+                .hasMessage("error.executionTimeout");
     }
 
     @Test
@@ -67,11 +67,11 @@ class DemoExecutorTest {
         DemoExecutor executor = new DemoExecutor(Duration.ofSeconds(5));
 
         Demo failing = demoRunning(() -> {
-            throw new DemoInputException("array", "array must be sorted ascending");
+            throw new DemoInputException("array", "error.arrayNotSorted", Map.of("index", 1));
         });
 
         assertThatThrownBy(() -> executor.run(failing, DemoParams.of(Map.of(), List.of())))
                 .isInstanceOf(DemoInputException.class)
-                .hasMessage("array must be sorted ascending");
+                .hasMessage("error.arrayNotSorted");
     }
 }

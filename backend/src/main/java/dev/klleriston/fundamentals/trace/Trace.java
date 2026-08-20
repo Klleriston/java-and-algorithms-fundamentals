@@ -4,7 +4,7 @@ import java.util.List;
 
 public record Trace(
         String demoId,
-        String title,
+        String titleKey,
         String sourceCode,
         List<TraceStep> steps,
         TraceResult result) {

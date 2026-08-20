@@ -1,4 +1,12 @@
 package dev.klleriston.fundamentals.api;
 
-public record ApiError(String error, String message, String field) {
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public record ApiError(String error, String messageKey, Map<String, Object> messageArgs, String field) {
+
+    public ApiError {
+        messageArgs = Collections.unmodifiableMap(new LinkedHashMap<>(messageArgs));
+    }
 }

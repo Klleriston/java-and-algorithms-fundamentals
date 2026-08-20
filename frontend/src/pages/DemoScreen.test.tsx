@@ -5,17 +5,35 @@ import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { setupServer } from 'msw/node';
 import { http, HttpResponse } from 'msw';
 import { DemoScreen } from './DemoScreen';
+import { I18nProvider } from '../i18n/I18nContext';
+import { format } from '../i18n/format';
+import en from '../i18n/en.json';
 import binarySearchTrace from '../fixtures/binary-search.json';
 
 const demos = [
   {
     id: 'binary-search',
-    title: 'Binary Search',
+    titleKey: 'demo.binarySearch.title',
     category: 'ALGORITHMS',
-    description: 'desc',
+    descriptionKey: 'demo.binarySearch.description',
     parameters: [
-      { name: 'array', type: 'INT_ARRAY', label: 'Sorted array', required: true, maxLength: 512, defaultValue: [2, 5, 8, 12, 20, 33] },
-      { name: 'target', type: 'INT', label: 'Target value', required: true, min: -1000, max: 1000, defaultValue: 20 },
+      {
+        name: 'array',
+        type: 'INT_ARRAY',
+        labelKey: 'demo.binarySearch.param.array',
+        required: true,
+        maxLength: 512,
+        defaultValue: [2, 5, 8, 12, 20, 33],
+      },
+      {
+        name: 'target',
+        type: 'INT',
+        labelKey: 'demo.binarySearch.param.target',
+        required: true,
+        min: -1000,
+        max: 1000,
+        defaultValue: 20,
+      },
     ],
     sourceCode: binarySearchTrace.sourceCode,
   },
@@ -29,7 +47,7 @@ const server = setupServer(
     if (failNext) {
       failNext = false;
       return HttpResponse.json(
-        { error: 'INVALID_INPUT', message: 'array must be sorted ascending', field: 'array' },
+        { error: 'INVALID_INPUT', messageKey: 'error.arrayNotSorted', messageArgs: {}, field: 'array' },
         { status: 400 },
       );
     }
@@ -46,11 +64,13 @@ afterAll(() => server.close());
 
 function renderScreen() {
   return render(
-    <MemoryRouter initialEntries={['/demo/binary-search']}>
-      <Routes>
-        <Route path="/demo/:id" element={<DemoScreen />} />
-      </Routes>
-    </MemoryRouter>,
+    <I18nProvider>
+      <MemoryRouter initialEntries={['/demo/binary-search']}>
+        <Routes>
+          <Route path="/demo/:id" element={<DemoScreen />} />
+        </Routes>
+      </MemoryRouter>
+    </I18nProvider>,
   );
 }
 
@@ -91,7 +111,12 @@ describe('DemoScreen', () => {
 
   it('shows the step message and variables', async () => {
     renderScreen();
-    await screen.findByText(binarySearchTrace.steps[0].message);
+    const firstStep = binarySearchTrace.steps[0];
+    const expectedMessage = format(
+      (en as Record<string, string>)[firstStep.messageKey],
+      firstStep.messageArgs,
+    );
+    await screen.findByText(expectedMessage);
     expect(screen.getAllByTestId('var-row').length).toBeGreaterThan(0);
   });
 
@@ -103,7 +128,9 @@ describe('DemoScreen', () => {
     failNext = true;
     await user.click(screen.getByRole('button', { name: 'Run' }));
 
-    expect(await screen.findByRole('alert')).toHaveTextContent('array must be sorted ascending');
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      (en as Record<string, string>)['error.arrayNotSorted'],
+    );
     expect(screen.getByText(`step 1 / ${binarySearchTrace.steps.length}`)).toBeInTheDocument();
   });
 });

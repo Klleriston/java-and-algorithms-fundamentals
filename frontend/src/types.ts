@@ -18,7 +18,8 @@ export type ViewPayload = ArrayViewPayload | UnknownViewPayload;
 export interface TraceStep {
   index: number;
   line: number;
-  message: string;
+  messageKey: string;
+  messageArgs: Record<string, unknown>;
   vars: Record<string, unknown>;
   view: ViewPayload;
 }
@@ -31,7 +32,7 @@ export interface TraceResult {
 
 export interface Trace {
   demoId: string;
-  title: string;
+  titleKey: string;
   sourceCode: string;
   steps: TraceStep[];
   result: TraceResult;
@@ -42,7 +43,7 @@ export type ParameterType = 'INT' | 'LONG' | 'INT_ARRAY' | 'STRING_ARRAY' | 'ENU
 export interface ParameterSpec {
   name: string;
   type: ParameterType;
-  label: string;
+  labelKey: string;
   required: boolean;
   min?: number;
   max?: number;
@@ -53,9 +54,9 @@ export interface ParameterSpec {
 
 export interface DemoSummary {
   id: string;
-  title: string;
+  titleKey: string;
   category: 'ALGORITHMS' | 'DATA_STRUCTURES' | 'JVM' | 'OOP';
-  description: string;
+  descriptionKey: string;
   parameters: ParameterSpec[];
   sourceCode: string;
 }

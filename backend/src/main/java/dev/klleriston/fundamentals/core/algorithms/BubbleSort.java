@@ -21,15 +21,17 @@ public final class BubbleSort {
                     int tmp = a[j];
                     a[j] = a[j + 1];
                     a[j + 1] = tmp;
-                    tracer.step(7, "a[" + j + "] > a[" + (j + 1) + "], swap them",
+                    tracer.step(7, "bubbleSort.swap",
+                            args("left", j, "right", j + 1, "leftValue", a[j], "rightValue", a[j + 1]),
                             vars(i, j), view(a, i, j, List.of(j, j + 1)));
                 } else {
-                    tracer.step(4, "a[" + j + "] <= a[" + (j + 1) + "], keep the order",
+                    tracer.step(4, "bubbleSort.keep",
+                            args("left", j, "right", j + 1, "leftValue", a[j], "rightValue", a[j + 1]),
                             vars(i, j), view(a, i, j, List.of()));
                 }
             }
         }
-        tracer.step(11, "The array is sorted", vars(Math.max(a.length - 1, 0), 0),
+        tracer.step(11, "bubbleSort.sorted", args(), vars(Math.max(a.length - 1, 0), 0),
                 view(a, a.length, 0, List.of()));
         return a;
     }
@@ -39,6 +41,14 @@ public final class BubbleSort {
         vars.put("i", i);
         vars.put("j", j);
         return vars;
+    }
+
+    private static Map<String, Object> args(Object... pairs) {
+        Map<String, Object> args = new LinkedHashMap<>();
+        for (int i = 0; i < pairs.length; i += 2) {
+            args.put((String) pairs[i], pairs[i + 1]);
+        }
+        return args;
     }
 
     private static ArrayView view(int[] a, int i, int j, List<Integer> swapped) {

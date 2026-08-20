@@ -34,8 +34,8 @@ public class BubbleSortDemo implements Demo {
     }
 
     @Override
-    public String title() {
-        return "Bubble Sort";
+    public String titleKey() {
+        return "demo.bubbleSort.title";
     }
 
     @Override
@@ -44,13 +44,13 @@ public class BubbleSortDemo implements Demo {
     }
 
     @Override
-    public String description() {
-        return "Repeatedly swap adjacent values out of order until the largest bubbles to the end.";
+    public String descriptionKey() {
+        return "demo.bubbleSort.description";
     }
 
     @Override
     public List<ParameterSpec> parameters() {
-        return List.of(ParameterSpec.intArray("array", "Array to sort", 64, List.of(5, 2, 9, 1, 7)));
+        return List.of(ParameterSpec.intArray("array", "demo.bubbleSort.param.array", 64, List.of(5, 2, 9, 1, 7)));
     }
 
     @Override
@@ -65,7 +65,7 @@ public class BubbleSortDemo implements Demo {
         Tracer tracer = new Tracer();
         int[] sorted = BubbleSort.sort(array, tracer);
 
-        return new Trace(id(), title(), SOURCE, tracer.steps(),
+        return new Trace(id(), titleKey(), SOURCE, tracer.steps(),
                 new TraceResult(Arrays.stream(sorted).boxed().toList(), tracer.steps().size(), false));
     }
 }

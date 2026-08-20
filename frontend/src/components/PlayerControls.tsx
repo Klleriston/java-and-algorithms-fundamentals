@@ -1,3 +1,4 @@
+import { useI18n } from '../i18n/I18nContext';
 import './panels.css';
 
 interface PlayerControlsProps {
@@ -27,6 +28,7 @@ export function PlayerControls({
   onSeek,
   onSpeedChange,
 }: PlayerControlsProps) {
+  const { t } = useI18n();
   return (
     <div className="player-controls">
       <button type="button" aria-label="first step" onClick={onFirst}>⏮</button>
@@ -46,7 +48,9 @@ export function PlayerControls({
         onChange={(event) => onSeek(Number(event.target.value))}
       />
 
-      <span className="player-controls__counter">{`step ${stepCount === 0 ? 0 : index + 1} / ${stepCount}`}</span>
+      <span className="player-controls__counter">
+        {t('ui.step', { current: stepCount === 0 ? 0 : index + 1, total: stepCount })}
+      </span>
 
       <select aria-label="speed" value={speedMs} onChange={(event) => onSpeedChange(Number(event.target.value))}>
         <option value={1200}>0.5x</option>

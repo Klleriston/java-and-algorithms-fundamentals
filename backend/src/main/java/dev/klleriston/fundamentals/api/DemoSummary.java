@@ -8,14 +8,14 @@ import java.util.List;
 
 public record DemoSummary(
         String id,
-        String title,
+        String titleKey,
         Category category,
-        String description,
+        String descriptionKey,
         List<ParameterSpec> parameters,
         String sourceCode) {
 
     public static DemoSummary from(Demo demo) {
-        return new DemoSummary(demo.id(), demo.title(), demo.category(), demo.description(),
+        return new DemoSummary(demo.id(), demo.titleKey(), demo.category(), demo.descriptionKey(),
                 demo.parameters(), demo.displaySource());
     }
 }

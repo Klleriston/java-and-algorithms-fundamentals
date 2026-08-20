@@ -11,6 +11,7 @@ import dev.klleriston.fundamentals.trace.Tracer;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class BinarySearchDemo implements Demo {
@@ -38,8 +39,8 @@ public class BinarySearchDemo implements Demo {
     }
 
     @Override
-    public String title() {
-        return "Binary Search";
+    public String titleKey() {
+        return "demo.binarySearch.title";
     }
 
     @Override
@@ -48,15 +49,15 @@ public class BinarySearchDemo implements Demo {
     }
 
     @Override
-    public String description() {
-        return "Halve the search range on every comparison to find a value in a sorted array.";
+    public String descriptionKey() {
+        return "demo.binarySearch.description";
     }
 
     @Override
     public List<ParameterSpec> parameters() {
         return List.of(
-                ParameterSpec.intArray("array", "Sorted array", 512, List.of(2, 5, 8, 12, 20, 33)),
-                ParameterSpec.integer("target", "Target value", -1000, 1000, 20));
+                ParameterSpec.intArray("array", "demo.binarySearch.param.array", 512, List.of(2, 5, 8, 12, 20, 33)),
+                ParameterSpec.integer("target", "demo.binarySearch.param.target", -1000, 1000, 20));
     }
 
     @Override
@@ -73,14 +74,14 @@ public class BinarySearchDemo implements Demo {
         Tracer tracer = new Tracer();
         int result = BinarySearch.search(array, target, tracer);
 
-        return new Trace(id(), title(), SOURCE, tracer.steps(),
+        return new Trace(id(), titleKey(), SOURCE, tracer.steps(),
                 new TraceResult(result, tracer.steps().size(), false));
     }
 
     private static void requireSorted(int[] array) {
         for (int i = 1; i < array.length; i++) {
             if (array[i - 1] > array[i]) {
-                throw new DemoInputException("array", "array must be sorted ascending");
+                throw new DemoInputException("array", "error.arrayNotSorted", Map.of("index", i));
             }
         }
     }

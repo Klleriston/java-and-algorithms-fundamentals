@@ -1,11 +1,17 @@
 {
   "demoId" : "bubble-sort",
-  "title" : "Bubble Sort",
+  "titleKey" : "demo.bubbleSort.title",
   "sourceCode" : "public static void sort(int[] a) {\n    for (int i = 0; i < a.length - 1; i++) {\n        for (int j = 0; j < a.length - 1 - i; j++) {\n            if (a[j] > a[j + 1]) {\n                int tmp = a[j];\n                a[j] = a[j + 1];\n                a[j + 1] = tmp;\n            }\n        }\n    }\n}",
   "steps" : [ {
     "index" : 0,
     "line" : 7,
-    "message" : "a[0] > a[1], swap them",
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 2,
+      "rightValue" : 5
+    },
     "vars" : {
       "i" : 0,
       "j" : 0
@@ -23,7 +29,13 @@
   }, {
     "index" : 1,
     "line" : 4,
-    "message" : "a[1] <= a[2], keep the order",
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 1,
+      "right" : 2,
+      "leftValue" : 5,
+      "rightValue" : 9
+    },
     "vars" : {
       "i" : 0,
       "j" : 1
@@ -41,7 +53,13 @@
   }, {
     "index" : 2,
     "line" : 7,
-    "message" : "a[2] > a[3], swap them",
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 2,
+      "right" : 3,
+      "leftValue" : 1,
+      "rightValue" : 9
+    },
     "vars" : {
       "i" : 0,
       "j" : 2
@@ -59,7 +77,13 @@
   }, {
     "index" : 3,
     "line" : 7,
-    "message" : "a[3] > a[4], swap them",
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 3,
+      "right" : 4,
+      "leftValue" : 7,
+      "rightValue" : 9
+    },
     "vars" : {
       "i" : 0,
       "j" : 3
@@ -77,7 +101,13 @@
   }, {
     "index" : 4,
     "line" : 4,
-    "message" : "a[0] <= a[1], keep the order",
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 2,
+      "rightValue" : 5
+    },
     "vars" : {
       "i" : 1,
       "j" : 0
@@ -99,7 +129,13 @@
   }, {
     "index" : 5,
     "line" : 7,
-    "message" : "a[1] > a[2], swap them",
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 1,
+      "right" : 2,
+      "leftValue" : 1,
+      "rightValue" : 5
+    },
     "vars" : {
       "i" : 1,
       "j" : 1
@@ -121,7 +157,13 @@
   }, {
     "index" : 6,
     "line" : 4,
-    "message" : "a[2] <= a[3], keep the order",
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 2,
+      "right" : 3,
+      "leftValue" : 5,
+      "rightValue" : 7
+    },
     "vars" : {
       "i" : 1,
       "j" : 2
@@ -143,7 +185,13 @@
   }, {
     "index" : 7,
     "line" : 7,
-    "message" : "a[0] > a[1], swap them",
+    "messageKey" : "bubbleSort.swap",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 1,
+      "rightValue" : 2
+    },
     "vars" : {
       "i" : 2,
       "j" : 0
@@ -165,7 +213,13 @@
   }, {
     "index" : 8,
     "line" : 4,
-    "message" : "a[1] <= a[2], keep the order",
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 1,
+      "right" : 2,
+      "leftValue" : 2,
+      "rightValue" : 5
+    },
     "vars" : {
       "i" : 2,
       "j" : 1
@@ -187,7 +241,13 @@
   }, {
     "index" : 9,
     "line" : 4,
-    "message" : "a[0] <= a[1], keep the order",
+    "messageKey" : "bubbleSort.keep",
+    "messageArgs" : {
+      "left" : 0,
+      "right" : 1,
+      "leftValue" : 1,
+      "rightValue" : 2
+    },
     "vars" : {
       "i" : 3,
       "j" : 0
@@ -209,7 +269,8 @@
   }, {
     "index" : 10,
     "line" : 11,
-    "message" : "The array is sorted",
+    "messageKey" : "bubbleSort.sorted",
+    "messageArgs" : { },
     "vars" : {
       "i" : 4,
       "j" : 0

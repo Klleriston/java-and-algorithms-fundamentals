@@ -8,11 +8,11 @@ public interface Demo {
 
     String id();
 
-    String title();
+    String titleKey();
 
     Category category();
 
-    String description();
+    String descriptionKey();
 
     List<ParameterSpec> parameters();
 

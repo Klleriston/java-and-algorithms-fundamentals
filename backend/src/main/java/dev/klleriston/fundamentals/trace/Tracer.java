@@ -19,11 +19,12 @@ public final class Tracer {
         this.maxSteps = maxSteps;
     }
 
-    public void step(int line, String message, Map<String, Object> vars, ViewPayload view) {
+    public void step(int line, String messageKey, Map<String, Object> messageArgs,
+                     Map<String, Object> vars, ViewPayload view) {
         if (steps.size() >= maxSteps) {
             throw new StepLimitExceededException(maxSteps);
         }
-        steps.add(new TraceStep(steps.size(), line, message, vars, view));
+        steps.add(new TraceStep(steps.size(), line, messageKey, messageArgs, vars, view));
     }
 
     public List<TraceStep> steps() {
