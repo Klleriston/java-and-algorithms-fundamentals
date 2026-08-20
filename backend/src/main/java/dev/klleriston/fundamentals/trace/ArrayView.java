@@ -1,5 +1,7 @@
 package dev.klleriston.fundamentals.trace;
 
+import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,7 @@ public record ArrayView(
 
     public ArrayView {
         items = List.copyOf(items);
-        pointers = Map.copyOf(pointers);
+        pointers = Collections.unmodifiableMap(new LinkedHashMap<>(pointers));
         ranges = List.copyOf(ranges);
         swapped = List.copyOf(swapped);
     }

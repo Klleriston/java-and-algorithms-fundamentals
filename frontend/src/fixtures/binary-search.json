@@ -7,15 +7,15 @@
     "line" : 8,
     "message" : "a[2] = 8 < 20, discard the left half",
     "vars" : {
-      "high" : 5,
       "low" : 0,
+      "high" : 5,
       "mid" : 2
     },
     "view" : {
       "items" : [ 2, 5, 8, 12, 20, 33 ],
       "pointers" : {
-        "high" : 5,
         "low" : 0,
+        "high" : 5,
         "mid" : 2
       },
       "ranges" : [ ],
@@ -27,15 +27,15 @@
     "line" : 6,
     "message" : "a[4] = 20 equals 20, found at index 4",
     "vars" : {
-      "high" : 5,
       "low" : 3,
+      "high" : 5,
       "mid" : 4
     },
     "view" : {
       "items" : [ 2, 5, 8, 12, 20, 33 ],
       "pointers" : {
-        "high" : 5,
         "low" : 3,
+        "high" : 5,
         "mid" : 4
       },
       "ranges" : [ {
